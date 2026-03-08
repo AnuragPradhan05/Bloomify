@@ -1,0 +1,945 @@
+/* ============================= */
+/* 🌸 Create Page Layout         */
+/* ============================= */
+
+.create-page {
+  min-height: 100vh;
+  background: #FFF3E6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 24px 60px;
+  gap: 40px;
+  font-family: 'Inter', sans-serif;
+  color: #381932;
+  box-sizing: border-box;
+}
+
+/* ── Header ── */
+.create-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+  width: 100%;
+}
+
+.create-title {
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  font-weight: 400;
+  color: #381932;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.create-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 2.2vw, 1.1rem);
+  color: #5D4A5B;
+  line-height: 1.6;
+}
+
+/* ── Counter badge ── */
+.counter-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  background: rgba(56, 25, 50, 0.07);
+  color: #5D4A5B;
+  border: 1px solid rgba(56, 25, 50, 0.15);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.counter-badge.counter-valid {
+  background: rgba(56, 25, 50, 0.12);
+  color: #381932;
+  border-color: #381932;
+}
+
+.counter-badge.counter-odd {
+  background: rgba(200, 80, 80, 0.08);
+  color: #a33030;
+  border-color: rgba(200, 80, 80, 0.3);
+}
+
+/* ============================= */
+/* 🌺 Flower Grid                */
+/* ============================= */
+
+.flower-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 950px;
+}
+
+/* ── Individual Card ── */
+.flower-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(56, 25, 50, 0.08);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.flower-card:hover {
+  box-shadow: 0 8px 28px rgba(56, 25, 50, 0.16);
+}
+
+.flower-card--selected {
+  border-color: #381932;
+  box-shadow:
+    0 0 0 3px rgba(56, 25, 50, 0.18),
+    0 8px 28px rgba(56, 25, 50, 0.18);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Flower image + checkmark ── */
+.flower-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.flower-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.35s ease;
+}
+
+.flower-card:hover .flower-img {
+  transform: scale(1.06);
+}
+
+/* Checkmark overlay */
+.flower-check-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(56, 25, 50, 0.45);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flower-check-icon {
+  font-size: 2.2rem;
+  color: #FFF3E6;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* ── Flower name label ── */
+.flower-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #381932;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+}
+
+/* ── + / − Controls ── */
+.flower-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ctrl-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ctrl-plus {
+  background: #381932;
+  color: #FFF3E6;
+}
+
+.ctrl-plus:hover:not(:disabled) {
+  background: #5a2e50;
+}
+
+.ctrl-plus:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.ctrl-plus:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ctrl-minus {
+  background: rgba(56, 25, 50, 0.12);
+  color: #381932;
+}
+
+.ctrl-minus:hover:not(:disabled) {
+  background: rgba(56, 25, 50, 0.22);
+}
+
+.ctrl-minus:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.ctrl-minus:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Count badge (top-right corner) ── */
+.flower-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #381932;
+  color: #FFF3E6;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(56, 25, 50, 0.35);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ============================= */
+/* ⚠️  Error & CTA              */
+/* ============================= */
+
+.create-error {
+  font-size: 0.9rem;
+  color: #a33030;
+  background: rgba(200, 80, 80, 0.07);
+  border: 1px solid rgba(200, 80, 80, 0.25);
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.build-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 2px solid rgba(56, 25, 50, 0.25);
+  border-radius: 50px;
+  background: rgba(56, 25, 50, 0.07);
+  color: #a38da0;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.build-btn--active {
+  background: #381932;
+  color: #FFF3E6;
+  border-color: #381932;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(56, 25, 50, 0.3);
+}
+
+.build-btn--active:hover {
+  box-shadow: 0 12px 32px rgba(56, 25, 50, 0.4);
+  transform: translateY(-2px);
+}
+
+.build-btn--active:active {
+  transform: translateY(0px);
+  box-shadow: 0 6px 18px rgba(56, 25, 50, 0.3);
+}
+
+.btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.build-btn--active:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+/* ======================================= */
+/* 🎨 Customise Step                       */
+/* ======================================= */
+
+.customise-page {
+  padding-top: 100px;
+  padding-bottom: 60px;
+  gap: 36px;
+}
+
+/* Two-column layout: preview left, controls right */
+.customise-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1000px;
+  align-items: start;
+}
+
+/* ── Bouquet preview area ── */
+.bouquet-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.bouquet-display {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 12px 40px rgba(56, 25, 50, 0.15);
+}
+
+.bouquet-bush {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  border-radius: 22px;
+}
+
+.bouquet-flower {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 243, 230, 0.7);
+  box-shadow: 0 4px 12px rgba(56, 25, 50, 0.25);
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* ── Shuffle button ── */
+.shuffle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 2px solid rgba(56, 25, 50, 0.3);
+  border-radius: 50px;
+  background: transparent;
+  color: #381932;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.shuffle-btn:hover {
+  background: rgba(56, 25, 50, 0.06);
+  border-color: #381932;
+}
+
+.shuffle-btn:active {
+  transform: scale(0.96);
+}
+
+/* ── Greenery panel ── */
+.greenery-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #381932;
+  letter-spacing: 0.5px;
+}
+
+.greenery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.greenery-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2.5px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(56, 25, 50, 0.1);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+  gap: 8px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.greenery-card--selected {
+  border-color: #381932;
+  box-shadow:
+    0 0 0 3px rgba(56, 25, 50, 0.2),
+    0 6px 20px rgba(56, 25, 50, 0.18);
+}
+
+.greenery-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.greenery-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #381932;
+  letter-spacing: 0.3px;
+  text-align: center;
+  padding: 0 6px;
+}
+
+.greenery-selected-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #381932;
+  box-shadow: 0 0 0 2px #FFF3E6;
+}
+
+.next-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* ======================================= */
+/* 📔 Message Step (Diary UI)             */
+/* ======================================= */
+
+/* Add Caveat font */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+.message-step {
+  padding-top: 100px;
+  min-height: 100vh;
+  justify-content: flex-start;
+}
+
+.diary-container {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ── Decorative Side Bouquets ── */
+.side-bouquet {
+  position: absolute;
+  width: 160px; /* Slightly smaller for better fit */
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(56, 25, 50, 0.15);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  z-index: 1; /* Above background */
+  pointer-events: none;
+}
+
+.side-bouquet-left {
+  left: -30%; /* Even tighter to stay within viewport */
+  top: 40px;
+}
+
+.side-bouquet-right {
+  right: -30%;
+  bottom: 60px;
+}
+
+/* Hide only on mobile where they would definitely overlap the note */
+@media (max-width: 768px) {
+  .side-bouquet {
+    display: none;
+  }
+}
+
+.diary-paper {
+  width: 100%;
+  background: #fff;
+  background-image: 
+    linear-gradient(#e1e1e1 1px, transparent 1px);
+  background-size: 100% 32px;
+  border-radius: 4px;
+  box-shadow: 
+    0 2px 10px rgba(0,0,0,0.1),
+    0 10px 40px rgba(56, 25, 50, 0.12);
+  padding: 50px 40px;
+  position: relative;
+  z-index: 2; /* Still above the side bouquets */
+  border: 1px solid #eee;
+  min-height: 480px;
+  box-sizing: border-box;
+}
+
+/* Paper edge effect */
+.diary-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30px;
+  bottom: 0;
+  width: 2px;
+  border-left: 1px solid #ffadad;
+  border-right: 1px solid #ffadad;
+}
+
+.diary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #381932;
+  padding-bottom: 15px;
+}
+
+.diary-icon {
+  font-size: 1.5rem;
+  color: #381932;
+}
+
+.diary-date {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  color: #381932;
+  font-size: 0.9rem;
+}
+
+.diary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #381932;
+}
+
+.diary-input-name {
+  border: none;
+  background: transparent;
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: #381932;
+  padding: 5px 0;
+  border-bottom: 1px dashed rgba(56, 25, 50, 0.3);
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+.diary-textarea {
+  border: none;
+  background: transparent;
+  width: 100%;
+  min-height: 250px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  line-height: 32px;
+  color: #555;
+  resize: none;
+  padding: 0;
+  outline: none;
+  margin-top: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+.diary-footer {
+  margin-top: 40px;
+  text-align: right;
+  font-family: 'Syne', sans-serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.send-btn {
+  width: auto;
+  min-width: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.send-btn.sending {
+  background: #a38da0;
+  cursor: wait;
+}
+
+/* ============================= */
+/* 📱 Responsive — Large Tablet  */
+/* (max-width: 1024px)           */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  .customise-layout {
+    gap: 28px;
+    max-width: 860px;
+  }
+
+  .flower-grid {
+    max-width: 100%;
+  }
+}
+
+/* ============================= */
+/* 📱 Responsive — Tablet        */
+/* (max-width: 768px)            */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  /* ── Create page ── */
+  .create-page {
+    padding: 80px 16px 50px;
+    gap: 28px;
+  }
+
+  /* ── Flower grid ── */
+  .flower-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
+
+  /* ── Build button full-width ── */
+  .build-btn {
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+    padding: 16px 28px;
+  }
+
+  /* ── Customise step ── */
+  .customise-page {
+    padding-top: 80px;
+    padding-bottom: 50px;
+    gap: 24px;
+  }
+
+  .customise-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .bouquet-display {
+    aspect-ratio: 4 / 3;
+    max-height: 600px;
+  }
+
+  .greenery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .next-btn {
+    max-width: 100%;
+  }
+
+  /* ── Message / diary step ── */
+  .message-step {
+    padding-top: 80px;
+  }
+
+  .diary-paper {
+    padding: 40px 25px;
+    min-height: 400px;
+  }
+
+  .diary-paper::before {
+    left: 20px;
+  }
+
+  .diary-input-name {
+    font-size: 1.6rem;
+  }
+
+  .diary-textarea {
+    font-size: 1.5rem;
+    line-height: 32px;
+    min-height: 200px;
+  }
+
+  .send-btn {
+    min-width: 0;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+/* ============================= */
+/* 📱 Responsive — Mobile        */
+/* (max-width: 480px)            */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+  /* ── Create page ── */
+  .create-page {
+    padding: 72px 12px 44px;
+    gap: 22px;
+  }
+
+  /* ── Flower grid: 2 columns ── */
+  .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .flower-card {
+    padding: 10px 10px 10px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+
+  .flower-name {
+    font-size: 0.8rem;
+  }
+
+  .ctrl-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* ── Error message ── */
+  .create-error {
+    font-size: 0.82rem;
+    padding: 9px 14px;
+  }
+
+  /* ── Build button ── */
+  .build-btn {
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 100%;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Customise step ── */
+  .customise-page {
+    padding-top: 72px;
+    padding-bottom: 44px;
+    gap: 18px;
+  }
+
+  .bouquet-display {
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+  }
+
+  .shuffle-btn {
+    padding: 10px 20px;
+    font-size: 0.78rem;
+  }
+
+  .panel-label {
+    font-size: 0.95rem;
+  }
+
+  .greenery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .greenery-name {
+    font-size: 0.68rem;
+  }
+
+  /* ── Diary step ── */
+  .message-step {
+    padding-top: 72px;
+  }
+
+  .diary-container {
+    gap: 20px;
+  }
+
+  .diary-paper {
+    padding: 30px 18px 30px 30px;
+    min-height: 360px;
+    border-radius: 4px;
+  }
+
+  .diary-paper::before {
+    left: 16px;
+  }
+
+  .diary-header {
+    margin-bottom: 28px;
+    padding-bottom: 10px;
+  }
+
+  .diary-icon {
+    font-size: 1.2rem;
+  }
+
+  .diary-date {
+    font-size: 0.8rem;
+  }
+
+  .input-group label {
+    font-size: 0.95rem;
+  }
+
+  .diary-input-name {
+    font-size: 1.4rem;
+  }
+
+  .diary-textarea {
+    font-size: 1.35rem;
+    line-height: 32px;
+    min-height: 180px;
+  }
+
+  .diary-footer {
+    font-size: 0.78rem;
+    margin-top: 24px;
+  }
+
+  .send-btn {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 15px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================= */
+/* 📱 Responsive — Small Mobile  */
+/* (max-width: 360px)            */
+/* ============================= */
+
+@media (max-width: 360px) {
+  .create-page,
+  .customise-page,
+  .message-step {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .flower-grid {
+    gap: 10px;
+  }
+
+  .flower-card {
+    padding: 8px 8px 9px;
+    border-radius: 12px;
+  }
+
+  .flower-name {
+    font-size: 0.72rem;
+  }
+
+  .ctrl-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.65rem;
+  }
+
+  .greenery-grid {
+    gap: 8px;
+  }
+
+  .diary-paper {
+    padding: 28px 14px 28px 26px;
+  }
+
+  .diary-paper::before {
+    left: 12px;
+  }
+
+  .diary-input-name {
+    font-size: 1.25rem;
+  }
+
+  .diary-textarea {
+    font-size: 1.2rem;
+  }
+}

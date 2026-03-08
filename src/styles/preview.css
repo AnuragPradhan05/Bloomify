@@ -1,0 +1,368 @@
+/* ======================================= */
+/* 🌸 Preview Page Styles                  */
+/* ======================================= */
+
+.preview-page {
+  min-height: 100vh;
+  padding: 100px 20px 60px;
+  background: #FFF3E6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.preview-content {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.preview-header {
+  text-align: center;
+}
+
+.preview-header h1 {
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: #381932;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.preview-header p {
+  color: #666;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.preview-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* ── Left: Bouquet Visual ── */
+.preview-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.bouquet-preview-container {
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 3 / 4;
+}
+
+/* ── Right: Card Details ── */
+.preview-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.share-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(56, 25, 50, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.share-card h3 {
+  font-family: 'Syne', sans-serif;
+  color: #381932;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  border-bottom: 2px solid #FFF3E6;
+  padding-bottom: 10px;
+}
+
+.message-box {
+  background: #fdfaf7;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #381932;
+  box-sizing: border-box;
+}
+
+.message-box p {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  color: #555;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.share-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.link-input-wrap {
+  display: flex;
+  gap: 10px;
+}
+
+.link-input-wrap input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  background: #f9f9f9;
+  min-width: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.copy-btn {
+  background: #381932;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy-btn:hover {
+  opacity: 0.9;
+}
+
+.copy-btn:active {
+  transform: scale(0.96);
+}
+
+.view-btn {
+  background: transparent;
+  color: #381932;
+  border: 2px solid #381932;
+  padding: 14px;
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.view-btn:hover {
+  background: #381932;
+  color: white;
+}
+
+.view-btn:active {
+  background: #381932;
+  color: white;
+  transform: scale(0.98);
+}
+
+/* ======================================= */
+/* 📱 Large Tablet (max-width: 850px)      */
+/* ======================================= */
+
+@media (max-width: 850px) {
+  .preview-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .preview-visual {
+    order: 1;
+  }
+
+  .preview-details {
+    order: 2;
+  }
+
+  .bouquet-preview-container {
+    max-width: 380px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Tablet Portrait (max-width: 768px)   */
+/* ======================================= */
+
+@media (max-width: 768px) {
+  .preview-page {
+    padding: 80px 16px 50px;
+  }
+
+  .preview-content {
+    gap: 28px;
+  }
+
+  .share-card {
+    padding: 28px 24px;
+    gap: 20px;
+    border-radius: 16px;
+  }
+
+  .message-box {
+    padding: 16px;
+  }
+
+  .bouquet-preview-container {
+    max-width: 340px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Mobile (max-width: 600px)            */
+/* ======================================= */
+
+@media (max-width: 600px) {
+  .preview-page {
+    padding: 72px 14px 44px;
+  }
+
+  .preview-content {
+    gap: 22px;
+  }
+
+  .bouquet-preview-container {
+    max-width: 100%;
+    aspect-ratio: 3 / 4;
+  }
+
+  .share-card {
+    padding: 24px 18px;
+    gap: 18px;
+    border-radius: 14px;
+  }
+
+  .message-box {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  /* Stack link input + copy button vertically */
+  .link-input-wrap {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link-input-wrap input {
+    width: 100%;
+    font-size: 0.82rem;
+    padding: 12px 12px;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  .share-actions {
+    gap: 12px;
+    margin-top: 6px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Small Mobile (max-width: 480px)      */
+/* ======================================= */
+
+@media (max-width: 480px) {
+  .preview-page {
+    padding: 64px 12px 40px;
+  }
+
+  .share-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+    gap: 16px;
+  }
+
+  .message-box {
+    padding: 12px 14px;
+  }
+
+  .view-btn {
+    padding: 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ======================================= */
+/* 📱 Tiny Phones (max-width: 360px)       */
+/* ======================================= */
+
+@media (max-width: 360px) {
+  .preview-page {
+    padding: 60px 10px 36px;
+  }
+
+  .share-card {
+    padding: 18px 14px;
+  }
+
+  .message-box {
+    padding: 10px 12px;
+    border-left-width: 3px;
+  }
+
+  .copy-btn,
+  .view-btn {
+    font-size: 0.85rem;
+    padding: 13px 16px;
+    border-radius: 8px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Landscape Phones                     */
+/* ======================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .preview-page {
+    padding: 20px 20px 30px;
+    align-items: flex-start;
+  }
+
+  .preview-content {
+    gap: 16px;
+  }
+
+  .preview-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .bouquet-preview-container {
+    max-width: 220px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .share-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .message-box {
+    padding: 12px;
+  }
+}

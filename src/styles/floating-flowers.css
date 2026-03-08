@@ -1,0 +1,111 @@
+/* ============================= */
+/* 🌸 Floating Flowers Component */
+/* ============================= */
+
+.floating-flowers {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flower {
+  position: absolute;
+  top: -50px;
+  will-change: transform, opacity;
+  z-index: 10;
+}
+
+/* 🌸 Premium Cherry Blossom Petal */
+.cherry-petal {
+  width: 22px;
+  height: 28px;
+  background: linear-gradient(135deg, rgba(255, 230, 240, 0.9), rgba(250, 160, 190, 0.7));
+  border-radius: 50% 0% 50% 50%;
+  box-shadow: 0px 4px 12px rgba(255, 180, 200, 0.4);
+  transform: rotate(45deg);
+}
+
+.flower:nth-child(odd) .cherry-petal {
+  background: linear-gradient(135deg, rgba(255, 245, 250, 0.9), rgba(255, 190, 210, 0.7));
+  box-shadow: 0px 2px 8px rgba(255, 190, 210, 0.3);
+  width: 18px;
+  height: 24px;
+}
+
+.flower:nth-child(even) .cherry-petal {
+  background: linear-gradient(135deg, rgba(255, 220, 235, 0.95), rgba(240, 150, 180, 0.8));
+}
+
+/* ======================================= */
+/* 📱 Tablet (max-width: 768px)            */
+/* ======================================= */
+
+@media (max-width: 768px) {
+  .cherry-petal {
+    width: 18px;
+    height: 22px;
+    box-shadow: 0px 3px 9px rgba(255, 180, 200, 0.35);
+  }
+
+  .flower:nth-child(odd) .cherry-petal {
+    width: 14px;
+    height: 18px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Mobile (max-width: 480px)            */
+/* ======================================= */
+
+@media (max-width: 480px) {
+  .flower {
+    top: -30px; /* shorter offscreen distance since petals are smaller */
+  }
+
+  .cherry-petal {
+    width: 14px;
+    height: 18px;
+    box-shadow: 0px 2px 6px rgba(255, 180, 200, 0.3);
+  }
+
+  .flower:nth-child(odd) .cherry-petal {
+    width: 11px;
+    height: 14px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Tiny Phones (max-width: 360px)       */
+/* ======================================= */
+
+@media (max-width: 360px) {
+  .cherry-petal {
+    width: 11px;
+    height: 14px;
+    box-shadow: 0px 2px 5px rgba(255, 180, 200, 0.25);
+  }
+
+  .flower:nth-child(odd) .cherry-petal {
+    width: 9px;
+    height: 12px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Landscape Phones                     */
+/* ======================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .cherry-petal {
+    width: 14px;
+    height: 18px;
+    opacity: 0.7; /* tone down in landscape so they don't crowd the short viewport */
+  }
+
+  .flower:nth-child(odd) .cherry-petal {
+    width: 11px;
+    height: 14px;
+  }
+}

@@ -1,0 +1,667 @@
+/* ============================= */
+/* 🌍 Global Reset               */
+/* ============================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #FFF3E6, #FFF3E6);
+  color: #381932;
+  overflow-x: hidden;
+}
+
+/* ============================= */
+/* 🏠 Layout Container           */
+/* ============================= */
+
+.home-container {
+  position: relative;
+  width: 100%;
+  background: #FFF3E6;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.home-container::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 243, 230, 0.4),
+    rgba(255, 243, 230, 0.2)
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.backdrop-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: clamp(5rem, 25vw, 20rem);
+  color: #381932;
+  opacity: 0.06;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: -2px;
+  font-weight: 900;
+}
+
+.sections-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.home-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+}
+
+.bouquet-decorations.fixed-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-box,
+.details-box {
+  max-width: 580px;
+  width: 90%;
+  text-align: center;
+}
+
+.promo-box {
+  max-width: 850px;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(56, 25, 50, 0.05);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #381932;
+  margin-bottom: 10px;
+}
+
+.badge-icon {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.promo-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.8rem, 10vw, 7.5rem);
+  font-weight: 80;
+  color: #2D1B2B;
+  line-height: 0.95;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+
+.never-fade-italic {
+  display: block;
+  font-style: italic;
+  color: #A38DA0;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.promo-paragraph {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  line-height: 1.6;
+  color: #5D4A5B;
+  font-weight: 400;
+  max-width: 700px;
+  margin: 10px auto 30px;
+  text-align: center;
+}
+
+/* ============================= */
+/* 🖼️ Bouquet & Butterfly Images */
+/* ============================= */
+
+.bouquet-img {
+  position: absolute;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(56, 25, 50, 0.2);
+  object-fit: cover;
+  cursor: crosshair;
+  pointer-events: auto;
+}
+
+.img-1 {
+  width: 250px;
+  height: 350px;
+  top: 10%;
+  right: 15%;
+}
+
+.img-2 {
+  width: 220px;
+  height: 300px;
+  bottom: 10%;
+  left: 10%;
+}
+
+.img-3 {
+  width: 200px;
+  height: 280px;
+  bottom: 5%;
+  right: 25%;
+}
+
+.butterfly-img {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(56, 25, 50, 0.2);
+  object-fit: cover;
+  z-index: 5;
+  border: 2px solid #FFF3E6;
+}
+
+.bfly-1 {
+  width: 90px;
+  height: 90px;
+  top: 20%;
+  left: 18%;
+}
+
+.bfly-2 {
+  width: 110px;
+  height: 110px;
+  top: 18%;
+  right: 12%;
+}
+
+.bfly-3 {
+  width: 80px;
+  height: 80px;
+  bottom: 20%;
+  left: 22%;
+}
+
+/* ============================= */
+/* 🪟 Glass Card                 */
+/* ============================= */
+
+.home-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 15px 40px rgba(56, 25, 50, 0.15);
+}
+
+.logo {
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #381932;
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+.logo-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.logo-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle, rgba(56, 25, 50, 0.15), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: blur(30px);
+}
+
+.logo-icon {
+  position: absolute;
+  top: -30%;
+  left: -25%;
+  font-size: 1em;
+  color: #381932;
+}
+
+.tagline {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  color: #a47e9b;
+  margin-bottom: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.tagline::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  margin: 14px auto 0;
+  background: linear-gradient(to right, #4c2645, #381932);
+  border-radius: 2px;
+}
+
+.create-btn {
+  padding: 16px 36px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 50px;
+  backdrop-filter: blur(4px);
+  box-shadow:
+    0 8px 20px rgba(56, 25, 50, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(56, 25, 50, 0.35);
+  cursor: pointer;
+  background-color: #381932;
+  color: #fff;
+}
+
+.create-btn:active {
+  transform: translateY(0px) scale(0.97);
+  box-shadow: 0 6px 16px rgba(56, 25, 50, 0.25);
+}
+
+.create-btn:hover .btn-icon {
+  transform: translateX(6px);
+}
+
+.create-btn svg {
+  transition: transform 0.3s ease, color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* ======================================= */
+/* 📱 Large Tablet (max-width: 1024px)     */
+/* ======================================= */
+
+@media (max-width: 1024px) {
+  .img-1 { right: 5%; width: 200px; height: 280px; }
+  .img-2 { left: 5%; width: 180px; height: 250px; }
+  .img-3 { right: 5%; width: 150px; height: 220px; }
+
+  .bfly-1 { left: 8%; width: 80px; height: 80px; }
+  .bfly-2 { right: 8%; width: 90px; height: 90px; }
+  .bfly-3 { left: 15%; width: 70px; height: 70px; }
+
+  .backdrop-text {
+    font-size: clamp(8rem, 20vw, 15rem);
+    letter-spacing: -3px;
+  }
+
+  .promo-title {
+    letter-spacing: -1px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Tablet Portrait (max-width: 768px)   */
+/* ======================================= */
+
+@media (max-width: 768px) {
+
+  .home-container {
+    justify-content: center;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  /* Fade back decorations so glass card stays readable */
+  .bouquet-img { opacity: 0.4; }
+  .img-1 { top: 2%; right: -40px; width: 140px; height: 180px; }
+  .img-2 { bottom: 2%; left: -40px; width: 130px; height: 160px; }
+  .img-3 { display: none; }
+
+  .butterfly-img { opacity: 0.6; }
+  .bfly-1 { width: 50px; height: 50px; top: 10%; left: 2%; }
+  .bfly-2 { width: 60px; height: 60px; top: 8%; right: 2%; }
+  .bfly-3 { display: none; }
+
+  .top-logo-icon {
+    font-size: 2rem;
+  }
+
+  .home-content {
+    gap: 16px;
+    padding: 30px 20px;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 16px;
+  }
+
+  .logo {
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+  }
+
+  .logo-icon {
+    top: -20%;
+    left: -18%;
+    font-size: 0.9em;
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    max-width: 250px;
+    line-height: 1.5;
+    opacity: 0.7;
+  }
+
+  .create-btn {
+    width: 100%;
+    max-width: 240px;
+    padding: 14px 0;
+    font-size: 1rem;
+    border-radius: 40px;
+    box-shadow: 0 6px 18px rgba(56, 25, 50, 0.2);
+  }
+
+  .backdrop-text {
+    font-size: clamp(5rem, 22vw, 10rem);
+    letter-spacing: -2px;
+    opacity: 0.05;
+  }
+
+  .promo-title {
+    font-size: clamp(2.4rem, 9vw, 4rem);
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+
+  .promo-paragraph {
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    margin-bottom: 20px;
+  }
+
+  .promo-badge {
+    font-size: 0.7rem;
+    padding: 6px 14px;
+  }
+
+  .home-section {
+    padding: 60px 16px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Mobile (max-width: 600px)            */
+/* ======================================= */
+
+@media (max-width: 600px) {
+  .home-section {
+    padding: 60px 14px;
+  }
+
+  .home-content {
+    padding: 28px 18px;
+    width: 94%;
+    max-width: 100%;
+    border-radius: 16px;
+    gap: 14px;
+  }
+
+  .logo {
+    font-size: clamp(2.2rem, 10vw, 2.8rem);
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-size: 0.88rem;
+    max-width: 220px;
+  }
+
+  .create-btn {
+    max-width: 100%;
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .promo-title {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .promo-paragraph {
+    font-size: 0.9rem;
+    padding: 0 4px;
+  }
+
+  .hero-box,
+  .details-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .promo-box {
+    width: 100%;
+    padding: 0 4px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Small Mobile (max-width: 480px)      */
+/* ======================================= */
+
+@media (max-width: 480px) {
+  .home-section {
+    padding: 60px 12px;
+    min-height: 100svh; /* use svh for notch-safe height on iOS */
+  }
+
+  .home-content {
+    padding: 24px 16px;
+    width: 95%;
+    border-radius: 14px;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: clamp(2rem, 11vw, 2.5rem);
+    letter-spacing: 0.5px;
+  }
+
+  .logo-icon {
+    font-size: 0.8em;
+    top: -16%;
+    left: -14%;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    max-width: 200px;
+  }
+
+  .tagline::after {
+    width: 44px;
+    margin-top: 10px;
+  }
+
+  .create-btn {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    border-radius: 36px;
+  }
+
+  .img-1 { top: 0; right: -50px; width: 110px; height: 140px; }
+  .img-2 { bottom: 0; left: -50px; width: 100px; height: 130px; }
+
+  .bfly-1 { width: 40px; height: 40px; }
+  .bfly-2 { width: 50px; height: 50px; }
+
+  .backdrop-text {
+    font-size: clamp(4rem, 20vw, 7rem);
+    opacity: 0.04;
+  }
+
+  .promo-title {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .promo-paragraph {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .promo-badge {
+    font-size: 0.65rem;
+    padding: 6px 12px;
+    letter-spacing: 1px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Tiny Phones (max-width: 360px)       */
+/* ======================================= */
+
+@media (max-width: 360px) {
+  .home-section {
+    padding: 52px 10px;
+  }
+
+  .home-content {
+    padding: 20px 14px;
+    border-radius: 12px;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 1.9rem;
+  }
+
+  .tagline {
+    font-size: 0.8rem;
+    max-width: 180px;
+  }
+
+  .create-btn {
+    padding: 13px 14px;
+    font-size: 0.85rem;
+    border-radius: 32px;
+  }
+
+  .promo-title {
+    font-size: clamp(1.8rem, 10vw, 2.4rem);
+  }
+
+  .promo-paragraph {
+    font-size: 0.82rem;
+  }
+
+  .img-1, .img-2 {
+    opacity: 0.25;
+  }
+
+  .bfly-1, .bfly-2 {
+    opacity: 0.4;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ======================================= */
+/* 📱 Landscape Phones                     */
+/* ======================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .home-section {
+    min-height: auto;
+    padding: 30px 20px;
+  }
+
+  .home-content {
+    padding: 20px 24px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 560px;
+    gap: 12px 24px;
+  }
+
+  .logo-wrapper {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logo {
+    font-size: 2.2rem;
+    margin-bottom: 0;
+  }
+
+  .tagline {
+    font-size: 0.82rem;
+    margin-bottom: 0;
+  }
+
+  .tagline::after {
+    display: none;
+  }
+
+  .create-btn {
+    padding: 12px 28px;
+    font-size: 0.88rem;
+  }
+
+  .backdrop-text {
+    font-size: clamp(4rem, 18vh, 8rem);
+  }
+
+  .img-1, .img-2, .img-3,
+  .bfly-1, .bfly-2, .bfly-3 {
+    display: none;
+  }
+}

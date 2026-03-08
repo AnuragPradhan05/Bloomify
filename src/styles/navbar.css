@@ -1,0 +1,51 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 30px 40px;
+  pointer-events: none; /* allows clicking things under the transparent navbar */
+}
+
+.navbar-logo-link {
+  display: inline-block;
+  pointer-events: auto; /* enables clicking only the link */
+  text-decoration: none;
+  color: inherit;
+}
+
+.top-left-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #381932;
+  cursor: pointer;
+}
+
+.top-logo-icon {
+  font-size: 3.5rem;
+  text-shadow: 2px 4px 8px rgba(56, 25, 50, 0.25), 
+               -1px -1px 0 rgba(255, 243, 230, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .top-logo-icon {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 20px;
+  }
+  .top-logo-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 15px;
+  }
+}
