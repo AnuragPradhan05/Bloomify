@@ -522,6 +522,99 @@
   bottom: 60px;
 }
 
+/* ── Decorative Illustrations for Pick Step ── */
+.decorative-illustration {
+  position: fixed;
+  width: 240px;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+  filter: blur(1px) drop-shadow(0 4px 12px rgba(56, 25, 50, 0.05));
+  transition: opacity 0.5s ease;
+}
+
+.decorative-illustration-left {
+  left: -10px;
+  top: 20%;
+  transform-origin: left top;
+}
+
+.decorative-illustration-right {
+  right: -10px;
+  bottom: 5%;
+  transform-origin: right bottom;
+}
+
+@media (max-width: 1400px) {
+  .decorative-illustration {
+    width: 180px;
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 1100px) {
+  .decorative-illustration {
+    display: none;
+  }
+}
+
+/* ── Interactive Bees for Customise Step ── */
+.bouquet-preview-wrap {
+  position: relative;
+}
+
+.bouquet-bee-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+.decoration-bee {
+  position: absolute;
+  width: 45px;
+  height: auto;
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+/* ── Message Step Decoration ── */
+.message-decoration-svg {
+  position: fixed;
+  bottom: 20px;
+  right: -20px;
+  width: 45%;
+  max-width: 550px;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+  /* Very subtle brightness adjustment to tone down the fill */
+  filter: brightness(2);
+}
+
+@media (max-width: 1000px) {
+  .message-decoration-svg {
+    width: 60%;
+    right: -5%;
+    opacity: 0.08;
+  }
+}
+
+@media (max-width: 768px) {
+  .message-decoration-svg {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .bouquet-bee-container {
+    display: none;
+  }
+}
+
 /* Hide only on mobile where they would definitely overlap the note */
 @media (max-width: 768px) {
   .side-bouquet {

@@ -1,10 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import Swal from "sweetalert2";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import FloatingFlowers from "../components/FloatingFlowers";
+import TypingMessage from "../components/TypingMessage";
 import "../styles/reveal.css";
 
 const BUSHES = {
@@ -30,6 +32,9 @@ function RevealBouquet() {
   const { id } = useParams();
   const [bouquet, setBouquet] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
+  
+  // Randomly select card style (1, 2, 3 or 4) - memoized so it stays same for the session of viewing this bouquet
+  const cardStyle = useMemo(() => Math.floor(Math.random() * 4) + 1, [id]);
 
   useEffect(() => {
     const fetchBouquet = async () => {
@@ -38,7 +43,12 @@ function RevealBouquet() {
       if (docSnap.exists()) {
         setBouquet(docSnap.data());
       } else {
-        alert("Bouquet not found 💔");
+        Swal.fire({
+          title: "Not Found",
+          text: "Bouquet not found 💔",
+          icon: "error",
+          confirmButtonColor: "#381932"
+        });
       }
     };
     fetchBouquet();
@@ -113,18 +123,21 @@ function RevealBouquet() {
             </motion.div>
 
             <motion.div 
-              className="reveal-card"
+              className={`reveal-card reveal-card--style-${cardStyle}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <h1 className="receiver-header">For {bouquet.receiverName}</h1>
               <div className="reveal-message-container">
-                <p className="reveal-message">{bouquet.message}</p>
+                <div className="reveal-message">
+                  <TypingMessage text={bouquet.message} />
+                </div>
               </div>
               <div className="reveal-footer">
                 <p>Sent with Bloomify 🌸</p>
               </div>
+              <div className="reveal-card-moon">🌙</div>
             </motion.div>
           </motion.div>
         )}

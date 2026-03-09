@@ -106,47 +106,91 @@
   margin-top: 10px;
 }
 
-.link-input-wrap {
+/* ── CopyLinkBox Component Styles ── */
+.copy-link-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link-input-group {
+  display: flex;
+  gap: 8px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 4px;
+  transition: border-color 0.2s;
+}
+
+.link-input-group:focus-within {
+  border-color: #381932;
+}
+
+.link-display-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #666;
+  outline: none;
+  min-width: 0;
+}
+
+.copy-action-btn {
+  background: #381932;
+  color: white;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.copy-action-btn:hover {
+  opacity: 0.9;
+}
+
+.copy-action-btn:active {
+  transform: scale(0.92);
+}
+
+.share-shortcut-group {
   display: flex;
   gap: 10px;
 }
 
-.link-input-wrap input {
+.whatsapp-share-btn {
   flex: 1;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  background: #f9f9f9;
-  min-width: 0;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.copy-btn {
-  background: #381932;
+  background: #25D366;
   color: white;
   border: none;
-  padding: 0 20px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 12px;
   font-family: 'Syne', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   cursor: pointer;
-  transition: opacity 0.2s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s, background 0.2s;
 }
 
-.copy-btn:hover {
-  opacity: 0.9;
+.whatsapp-share-btn:hover {
+  background: #20ba59;
 }
 
-.copy-btn:active {
-  transform: scale(0.96);
+.whatsapp-share-btn:active {
+  transform: scale(0.98);
 }
 
 .view-btn {
@@ -256,23 +300,24 @@
     border-radius: 10px;
   }
 
-  /* Stack link input + copy button vertically */
-  .link-input-wrap {
+  /* Customise CopyLinkBox for Mobile */
+  .link-input-group {
+    padding: 2px;
+  }
+
+  .link-display-input {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+
+  .share-shortcut-group {
     flex-direction: column;
-    gap: 10px;
   }
 
-  .link-input-wrap input {
+  .whatsapp-share-btn {
     width: 100%;
-    font-size: 0.82rem;
-    padding: 12px 12px;
-  }
-
-  .copy-btn {
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 14px;
+    font-size: 0.85rem;
   }
 
   .share-actions {
