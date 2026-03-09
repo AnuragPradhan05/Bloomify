@@ -217,9 +217,11 @@ function PickFlowersStep() {
 function CustomiseStep() {
   const location = useLocation();
   const navigate = useNavigate();
-  const counts = location.state?.counts || {};
 
-  // Expand counts → flat array of flower objects for the preview
+  const counts = useMemo(() => {
+    return location.state?.counts || {};
+  }, [location.state]);
+
   const flowerList = useMemo(() => {
     const list = [];
     Object.entries(counts).forEach(([id, qty]) => {
