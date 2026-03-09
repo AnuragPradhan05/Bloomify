@@ -34,7 +34,7 @@ function RevealBouquet() {
   const [isOpened, setIsOpened] = useState(false);
   
   // Randomly select card style (1, 2, 3 or 4) - memoized so it stays same for the session of viewing this bouquet
-  const cardStyle = useMemo(() => Math.floor(Math.random() * 4) + 1, [id]);
+  const cardStyle = useMemo(() => Math.floor(Math.random() * 4) + 1, []);
 
   useEffect(() => {
     const fetchBouquet = async () => {
