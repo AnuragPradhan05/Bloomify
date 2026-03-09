@@ -2,11 +2,17 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { FaArrowRight, FaPlus, FaMinus, FaRandom, FaPenNib, FaPaperPlane } from "react-icons/fa";
+import Swal from "sweetalert2";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import bouquet1 from "../assets/bouqet1.jpeg";
 import bouquet2 from "../assets/bouquet2.jpeg";
+import illustration2 from "../assets/illustrations/illustration2.png";
+import illustration3 from "../assets/illustrations/illustration3.png";
+import bee from "../assets/illustrations/bee.png";
+import bee2 from "../assets/illustrations/bee2.png";
+import writeIllustration from "../assets/illustrations/write.svg";
 import "../styles/create.css";
 
 // ── Catalogues ────────────────────────────────────────────────────────────────
@@ -103,6 +109,44 @@ function PickFlowersStep() {
         </motion.div>
       </motion.div>
 
+      {/* Decorative Illustrations */}
+      <motion.img 
+        src={illustration2} 
+        alt="" 
+        className="decorative-illustration decorative-illustration-left"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ 
+          opacity: 0.6, 
+          x: 0,
+          y: [0, -10, 0],
+          rotate: [-0.5, 0.5, -0.5]
+        }}
+        transition={{ 
+          opacity: { duration: 1.5 },
+          x: { duration: 1.5 },
+          y: { repeat: Infinity, duration: 10, ease: "easeInOut" },
+          rotate: { repeat: Infinity, duration: 12, ease: "easeInOut" }
+        }}
+      />
+      <motion.img 
+        src={illustration3} 
+        alt="" 
+        className="decorative-illustration decorative-illustration-right"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ 
+          opacity: 0.6, 
+          x: 0,
+          y: [0, 10, 0],
+          rotate: [0.5, -0.5, 0.5]
+        }}
+        transition={{ 
+          opacity: { duration: 1.5 },
+          x: { duration: 1.5 },
+          y: { repeat: Infinity, duration: 12, ease: "easeInOut", delay: 1 },
+          rotate: { repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }
+        }}
+      />
+
       <div className="flower-grid">
         {FLOWERS.map((flower, i) => {
           const count = getCount(flower.id);
@@ -187,6 +231,7 @@ function CustomiseStep() {
 
   const [selectedBush, setSelectedBush] = useState(BUSHES[0]);
   const [shuffleKey, setShuffleKey] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const shuffle = () => setShuffleKey((k) => k + 1);
 
@@ -213,8 +258,63 @@ function CustomiseStep() {
 
       <div className="customise-layout">
         {/* ── Left: Live bouquet preview ── */}
-        <motion.div className="bouquet-preview-wrap"
-          initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
+        <motion.div 
+          className="bouquet-preview-wrap"
+          initial={{ opacity: 0, x: -30 }} 
+          animate={{ opacity: 1, x: 0 }} 
+          transition={{ duration: 0.7, delay: 0.1 }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Localized Interactive Bees */}
+          <div className="bouquet-bee-container">
+            {[...Array(4)].map((_, i) => (
+              <motion.img 
+                key={i}
+                src={i % 2 === 0 ? bee : bee2} 
+                alt="" 
+                className="decoration-bee"
+                animate={{
+                  x: isHovered 
+                    ? (i === 0 ? -600 : i === 1 ? 600 : i === 2 ? -400 : 400) // Fly far off-screen
+                    : [0, (i % 2 === 0 ? 30 : -30), 0], // Gentle buzz
+                  y: isHovered 
+                    ? (i < 2 ? -600 : 600) // Fly far off-screen
+                    : [0, (i % 2 === 0 ? -40 : 40), 0],
+                  rotate: isHovered 
+                    ? (i % 2 === 0 ? -90 : 90) 
+                    : [0, 15, -15, 0],
+                  scale: isHovered ? 0.4 : 1.1,
+                  opacity: isHovered ? 0 : 1
+                }}
+                transition={{
+                  x: { 
+                    duration: isHovered ? 0.6 : (2.5 + i * 0.5), 
+                    repeat: isHovered ? 0 : Infinity, 
+                    ease: "easeInOut" 
+                  },
+                  y: { 
+                    duration: isHovered ? 0.6 : (2.5 + i * 0.5), 
+                    repeat: isHovered ? 0 : Infinity, 
+                    ease: "easeInOut" 
+                  },
+                  rotate: { 
+                    duration: isHovered ? 0.6 : (2.5 + i * 0.5), 
+                    repeat: isHovered ? 0 : Infinity, 
+                    ease: "easeInOut" 
+                  },
+                  scale: { duration: 0.6 },
+                  opacity: { duration: 0.6 }
+                }}
+                style={{
+                  top: `${30 + (i % 2) * 20}%`,
+                  left: `${30 + (i > 1 ? 1 : 0) * 30}%`,
+                  zIndex: 10
+                }}
+              />
+            ))}
+          </div>
+
           <BouquetDisplay
             key={shuffleKey}
             seed={shuffleKey}
@@ -274,7 +374,12 @@ function MessageStep() {
 
   const handleFinalize = async () => {
     if (!receiverName.trim() || !message.trim()) {
-      alert("Please fill in both the name and your message! ✨");
+      Swal.fire({
+        title: "Missing Information",
+        text: "Please fill in both the name and your message! ✨",
+        icon: "warning",
+        confirmButtonColor: "#381932"
+      });
       return;
     }
 
@@ -291,14 +396,40 @@ function MessageStep() {
       navigate(`/preview/${docRef.id}`);
     } catch (error) {
       console.error("Error saving bouquet:", error);
-      alert("Something went wrong saving your bouquet. Please try again! 🌸");
+      Swal.fire({
+        title: "Submission Error",
+        text: "Something went wrong saving your bouquet. Please try again! 🌸",
+        icon: "error",
+        confirmButtonColor: "#381932"
+      });
     } finally {
       setIsSending(false);
     }
   };
 
   return (
-    <div className="create-page message-step">
+    <div className="create-page message-page">
+      {/* ── Background Decoration ── */}
+      <motion.img
+        src={writeIllustration}
+        alt=""
+        className="message-decoration-svg"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{
+          opacity: 0.12,
+          x: 0,
+          y: [0, -10, 0]
+        }}
+        transition={{
+          duration: 1.5,
+          y: {
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }
+        }}
+      />
+
       <motion.div className="create-header"
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="create-title">Write a Note</h1>

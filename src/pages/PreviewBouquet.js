@@ -1,9 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import FloatingFlowers from "../components/FloatingFlowers";
+import CopyLinkBox from "../components/CopyLinkBox";
 import "../styles/preview.css";
 
 const BUSHES = {
@@ -37,7 +39,12 @@ function PreviewBouquet() {
       if (docSnap.exists()) {
         setBouquet(docSnap.data());
       } else {
-        alert("Bouquet not found 💔");
+        Swal.fire({
+          title: "Not Found",
+          text: "Bouquet not found 💔",
+          icon: "error",
+          confirmButtonColor: "#381932"
+        });
       }
     };
     fetchBouquet();
@@ -53,11 +60,7 @@ function PreviewBouquet() {
     return list;
   }, [bouquet]);
 
-  const copyLink = () => {
-    const link = `${window.location.origin}/b/${id}`;
-    navigator.clipboard.writeText(link);
-    alert("Link copied 💐");
-  };
+
 
   if (!bouquet) return <div className="preview-container">Loading your bouquet...</div>;
 
@@ -91,13 +94,7 @@ function PreviewBouquet() {
               </div>
               
               <div className="share-actions">
-                <div className="link-input-wrap">
-                  <input
-                    value={`${window.location.origin}/b/${id}`}
-                    readOnly
-                  />
-                  <button className="copy-btn" onClick={copyLink}>Copy Link</button>
-                </div>
+                <CopyLinkBox link={`${window.location.origin}/b/${id}`} />
 
                 <button
                   className="view-btn"

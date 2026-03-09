@@ -6,9 +6,11 @@ import PreviewBouquet from "./pages/PreviewBouquet";
 import RevealBouquet from "./pages/RevealBouquet";
 import Navbar from "./components/Navbar";
 import IntroVideo from "./components/IntroVideo";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  // Show intro by default, but skip it if the URL is for a direct bouquet reveal (/b/...)
+  const [showIntro, setShowIntro] = useState(!window.location.pathname.startsWith("/b/"));
 
   return (
     <>
@@ -16,6 +18,7 @@ function App() {
       
       {!showIntro && (
         <Router>
+          <ScrollToTop />
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
