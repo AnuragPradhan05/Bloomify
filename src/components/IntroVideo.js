@@ -24,6 +24,9 @@ function IntroVideo({ onComplete }) {
         playsInline
         onEnded={handleVideoEnd}
       />
+      <button className="skip-button" onClick={handleVideoEnd}>
+        Skip
+      </button>
     </div>
   );
 }

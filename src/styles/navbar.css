@@ -5,12 +5,12 @@
   width: 100%;
   z-index: 100;
   padding: 30px 40px;
-  pointer-events: none; /* allows clicking things under the transparent navbar */
+  pointer-events: none;
 }
 
 .navbar-logo-link {
   display: inline-block;
-  pointer-events: auto; /* enables clicking only the link */
+  pointer-events: auto;
   text-decoration: none;
   color: inherit;
 }
@@ -18,20 +18,58 @@
 .top-left-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   color: #381932;
   cursor: pointer;
 }
 
 .top-logo-icon {
   font-size: 3.5rem;
-  text-shadow: 2px 4px 8px rgba(56, 25, 50, 0.25), 
-               -1px -1px 0 rgba(255, 243, 230, 0.4);
+  text-shadow:
+    2px 4px 8px rgba(56, 25, 50, 0.25),
+    -1px -1px 0 rgba(255, 243, 230, 0.4);
+  display: block;
+  flex-shrink: 0;
 }
+
+/* ── Shared label styles ── */
+.nav-home-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #381932;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Desktop label — shown via AnimatePresence on hover */
+.nav-home-label--desktop {
+  font-size: 0.78rem;
+  letter-spacing: 1.8px;
+  opacity: 0.65;
+}
+
+/* Mobile label — hidden on desktop, always visible on touch screens */
+.nav-home-label--mobile {
+  display: none;
+  font-size: 0.68rem;
+  letter-spacing: 1.2px;
+  opacity: 0.55;
+}
+
+/* ======================================= */
+/* 📱 Responsive                           */
+/* ======================================= */
 
 @media (max-width: 1024px) {
   .top-logo-icon {
     font-size: 2.2rem;
+  }
+
+  .nav-home-label--desktop {
+    font-size: 0.72rem;
+    letter-spacing: 1.4px;
   }
 }
 
@@ -39,13 +77,34 @@
   .navbar {
     padding: 20px;
   }
+
   .top-logo-icon {
     font-size: 2rem;
+  }
+
+  /* Hide hover-based label, show always-on label */
+  .nav-home-label--desktop {
+    display: none !important;
+  }
+
+  .nav-home-label--mobile {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 1.2px;
   }
 }
 
 @media (max-width: 480px) {
   .navbar {
     padding: 15px;
+  }
+
+  .top-logo-icon {
+    font-size: 1.8rem;
+  }
+
+  .nav-home-label--mobile {
+    font-size: 0.62rem;
+    letter-spacing: 1px;
   }
 }

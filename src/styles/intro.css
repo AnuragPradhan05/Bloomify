@@ -74,3 +74,39 @@
     object-fit: cover;
   }
 }
+.skip-button {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10000;
+  text-transform: uppercase;
+}
+
+.skip-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.skip-button:active {
+  transform: translateY(0);
+}
+
+/* Hide skip button when container is fading out */
+.intro-container.fade-out .skip-button {
+  opacity: 0;
+  pointer-events: none;
+}

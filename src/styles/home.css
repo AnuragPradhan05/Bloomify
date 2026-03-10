@@ -72,6 +72,11 @@ body {
   padding: 80px 20px;
 }
 
+/* ── Hero section needs position relative for the arrow anchor ── */
+.section-hero {
+  position: relative;
+}
+
 .bouquet-decorations.fixed-decor {
   position: fixed;
   inset: 0;
@@ -321,6 +326,59 @@ body {
   vertical-align: middle;
 }
 
+/* ============================= */
+/* ⬇️  Scroll Down Arrow         */
+/* ============================= */
+
+.scroll-down-btn {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 25, 50, 0.25);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #381932;
+  font-size: 1rem;
+  cursor: pointer;
+
+  animation: bounce-arrow 2s ease-in-out infinite;
+  transition: background 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scroll-down-btn:hover {
+  background: rgba(56, 25, 50, 0.1);
+  border-color: #381932;
+  box-shadow: 0 6px 18px rgba(56, 25, 50, 0.18);
+}
+
+.scroll-down-btn:active {
+  transform: translateX(-50%) scale(0.93);
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(9px);
+  }
+}
+
 /* ======================================= */
 /* 📱 Large Tablet (max-width: 1024px)     */
 /* ======================================= */
@@ -349,27 +407,25 @@ body {
 /* ======================================= */
 
 @media (max-width: 768px) {
-
   .home-container {
     justify-content: center;
     align-items: center;
     padding: 0 24px;
   }
 
-  /* Fade back decorations so glass card stays readable */
   .bouquet-img { opacity: 0.4; }
-  .img-1 { top: 2%; right: -40px; width: 140px; height: 180px; }
-  .img-2 { bottom: 2%; left: -40px; width: 130px; height: 160px; }
+
+  /* Remove negative values — keep images just inside the edge */
+  .img-1 { top: 2%; right: 0; width: 130px; height: 170px; border-radius: 0 0 0 16px; }
+  .img-2 { bottom: 10%; left: 0; width: 120px; height: 155px; border-radius: 0 16px 16px 0; }
   .img-3 { display: none; }
 
   .butterfly-img { opacity: 0.6; }
-  .bfly-1 { width: 50px; height: 50px; top: 10%; left: 2%; }
-  .bfly-2 { width: 60px; height: 60px; top: 8%; right: 2%; }
+  .bfly-1 { width: 50px; height: 50px; top: 10%; left: 4%; }
+  .bfly-2 { width: 60px; height: 60px; top: 8%; right: 4%; }
   .bfly-3 { display: none; }
 
-  .top-logo-icon {
-    font-size: 2rem;
-  }
+  .top-logo-icon { font-size: 2rem; }
 
   .home-content {
     gap: 16px;
@@ -430,6 +486,13 @@ body {
 
   .home-section {
     padding: 60px 16px;
+  }
+
+  .scroll-down-btn {
+    bottom: 28px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
   }
 }
 
@@ -496,7 +559,7 @@ body {
 @media (max-width: 480px) {
   .home-section {
     padding: 60px 12px;
-    min-height: 100svh; /* use svh for notch-safe height on iOS */
+    min-height: 100svh;
   }
 
   .home-content {
@@ -534,11 +597,11 @@ body {
     border-radius: 36px;
   }
 
-  .img-1 { top: 0; right: -50px; width: 110px; height: 140px; }
-  .img-2 { bottom: 0; left: -50px; width: 100px; height: 130px; }
+  .img-1 { width: 100px; height: 130px; top: 1%; right: 0; }
+  .img-2 { width: 90px; height: 115px; bottom: 8%; left: 0; }
 
   .bfly-1 { width: 40px; height: 40px; }
-  .bfly-2 { width: 50px; height: 50px; }
+  .bfly-2 { width: 48px; height: 48px; }
 
   .backdrop-text {
     font-size: clamp(4rem, 20vw, 7rem);
@@ -562,6 +625,14 @@ body {
     padding: 6px 12px;
     letter-spacing: 1px;
   }
+
+  .scroll-down-btn {
+    bottom: 22px;
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+    border-color: rgba(56, 25, 50, 0.2);
+  }
 }
 
 /* ======================================= */
@@ -579,9 +650,7 @@ body {
     gap: 10px;
   }
 
-  .logo {
-    font-size: 1.9rem;
-  }
+  .logo { font-size: 1.9rem; }
 
   .tagline {
     font-size: 0.8rem;
@@ -598,18 +667,15 @@ body {
     font-size: clamp(1.8rem, 10vw, 2.4rem);
   }
 
-  .promo-paragraph {
-    font-size: 0.82rem;
-  }
+  .promo-paragraph { font-size: 0.82rem; }
 
-  .img-1, .img-2 {
-    opacity: 0.25;
-  }
+  .img-1 { width: 80px; height: 105px; }
+  .img-2 { width: 75px; height: 95px; }
 
   .bfly-1, .bfly-2 {
-    opacity: 0.4;
     width: 36px;
     height: 36px;
+    opacity: 0.4;
   }
 }
 
@@ -647,9 +713,7 @@ body {
     margin-bottom: 0;
   }
 
-  .tagline::after {
-    display: none;
-  }
+  .tagline::after { display: none; }
 
   .create-btn {
     padding: 12px 28px;
@@ -663,5 +727,12 @@ body {
   .img-1, .img-2, .img-3,
   .bfly-1, .bfly-2, .bfly-3 {
     display: none;
+  }
+
+  .scroll-down-btn {
+    bottom: 12px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.78rem;
   }
 }
