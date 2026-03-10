@@ -458,3 +458,55 @@
     margin-top: 12px;
   }
 }
+
+
+.back-to-preview-btn {
+  position: fixed;
+  top: 100px; /* was 24px — now clears the navbar icon */
+  left: 24px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #381932;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(56, 25, 50, 0.2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-to-preview-btn:hover {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: #381932;
+  box-shadow: 0 6px 18px rgba(56, 25, 50, 0.15);
+}
+
+.back-to-preview-btn:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 768px) {
+  .back-to-preview-btn {
+    top: 72px; /* navbar icon is smaller on tablet */
+    left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-to-preview-btn {
+    top: 64px; /* navbar icon is smaller on mobile */
+    left: 16px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+  }
+}

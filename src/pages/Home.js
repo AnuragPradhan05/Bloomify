@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FaArrowRight } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaArrowRight, FaChevronDown } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
+import { useState, useEffect } from "react";
 import bouquet1 from "../assets/bouqet1.jpeg";
 import bouquet2 from "../assets/bouquet2.jpeg";
 import bouquet3 from "../assets/bouquet3.jpeg";
@@ -13,6 +14,26 @@ import FloatingFlowers from "../components/FloatingFlowers";
 
 function Home() {
   const navigate = useNavigate();
+  const [showArrow, setShowArrow] = useState(true);
+
+  useEffect(() => {
+    const container = document.querySelector(".home-container");
+    if (!container) return;
+
+    const handleScroll = () => {
+      setShowArrow(container.scrollTop < 60);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollDown = () => {
+    const detailsSection = document.querySelector(".section-details");
+    if (detailsSection) {
+      detailsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="home-container">
@@ -21,49 +42,48 @@ function Home() {
 
       {/* Fixed Background Decorations */}
       <div className="bouquet-decorations fixed-decor">
-        <motion.img 
-          src={bouquet1} 
-          alt="Bouquet 1" 
+        <motion.img
+          src={bouquet1}
+          alt="Bouquet 1"
           className="bouquet-img img-1"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.2 }}
         />
-        <motion.img 
-          src={bouquet2} 
-          alt="Bouquet 2" 
+        <motion.img
+          src={bouquet2}
+          alt="Bouquet 2"
           className="bouquet-img img-2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.4 }}
         />
-        <motion.img 
-          src={bouquet3} 
-          alt="Bouquet 3" 
+        <motion.img
+          src={bouquet3}
+          alt="Bouquet 3"
           className="bouquet-img img-3"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.6 }}
         />
 
-        {/* Butterfly Decorations */}
-        <motion.img 
-          src={butterfly1} 
-          alt="Butterfly 1" 
+        <motion.img
+          src={butterfly1}
+          alt="Butterfly 1"
           className="butterfly-img bfly-1"
           animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         />
-        <motion.img 
-          src={butterfly2} 
-          alt="Butterfly 2" 
+        <motion.img
+          src={butterfly2}
+          alt="Butterfly 2"
           className="butterfly-img bfly-2"
           animate={{ y: [0, 15, 0] }}
           transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
         />
-        <motion.img 
-          src={butterfly3} 
-          alt="Butterfly 3" 
+        <motion.img
+          src={butterfly3}
+          alt="Butterfly 3"
           className="butterfly-img bfly-3"
           animate={{ y: [0, -12, 0] }}
           transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }}
@@ -71,7 +91,8 @@ function Home() {
       </div>
 
       <div className="sections-wrapper">
-        {/* Section 1: Hero */}
+
+        {/* ── Section 1: Hero ── */}
         <section className="home-section section-hero">
           <motion.div
             className="home-content"
@@ -98,9 +119,26 @@ function Home() {
               Where emotions bloom into petals
             </motion.p>
           </motion.div>
+
+          {/* Arrow sits outside home-content but inside section-hero */}
+          <AnimatePresence>
+            {showArrow && (
+              <motion.button
+                className="scroll-down-btn"
+                onClick={handleScrollDown}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ delay: 1.6, duration: 0.6 }}
+                aria-label="Scroll down"
+              >
+                <FaChevronDown />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </section>
 
-        {/* Section 2: Details */}
+        {/* ── Section 2: Details ── */}
         <section className="home-section section-details">
           <motion.div
             className="home-content promo-box"
@@ -117,8 +155,10 @@ function Home() {
               <span className="never-fade-italic">never fade.</span>
             </h2>
             <p className="promo-paragraph">
-              Experience the romance of digital gifting. Send a hand-crafted, <br />
-              animated bouquet that lives forever in their heart and on their screen.
+              Experience the romance of digital gifting. Send a hand-crafted,{" "}
+              <br />
+              animated bouquet that lives forever in their heart and on their
+              screen.
             </p>
 
             <motion.button
@@ -131,6 +171,7 @@ function Home() {
             </motion.button>
           </motion.div>
         </section>
+
       </div>
     </div>
   );

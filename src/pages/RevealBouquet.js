@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Swal from "sweetalert2";
 import { db } from "../firebase";
@@ -30,10 +30,15 @@ const FLOWERS = {
 
 function RevealBouquet() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Only true if creator clicked "See Receiver View" from preview page
+  const fromPreview = location.state?.fromPreview === true;
+
   const [bouquet, setBouquet] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
-  
-  // Randomly select card style (1, 2, 3 or 4) - memoized so it stays same for the session of viewing this bouquet
+
   const cardStyle = useMemo(() => Math.floor(Math.random() * 4) + 1, []);
 
   useEffect(() => {
@@ -47,7 +52,7 @@ function RevealBouquet() {
           title: "Not Found",
           text: "Bouquet not found 💔",
           icon: "error",
-          confirmButtonColor: "#381932"
+          confirmButtonColor: "#381932",
         });
       }
     };
@@ -64,16 +69,34 @@ function RevealBouquet() {
     return list;
   }, [bouquet]);
 
-  if (!bouquet) return <div className="reveal-container loading-state">Loading your surprise... 🌷</div>;
+  if (!bouquet)
+    return (
+      <div className="reveal-container loading-state">
+        Loading your surprise... 🌷
+      </div>
+    );
 
   return (
     <div className="reveal-page">
       <FloatingFlowers />
       <div className="reveal-backdrop-text">For You</div>
 
+      {/* ── Back to Preview (only visible to creator) ── */}
+      {fromPreview && (
+        <motion.button
+          className="back-to-preview-btn"
+          onClick={() => navigate(`/preview/${id}`)}
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          ← Back to Preview
+        </motion.button>
+      )}
+
       <AnimatePresence mode="wait">
         {!isOpened ? (
-          <motion.div 
+          <motion.div
             key="closed"
             className="reveal-intro"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -82,16 +105,20 @@ function RevealBouquet() {
             transition={{ duration: 0.8 }}
           >
             <div className="gift-box-container">
-              <motion.div 
+              <motion.div
                 className="gift-box"
                 animate={{ y: [0, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
               >
                 🎁
               </motion.div>
-              <h1 className="tap-title">A surprise for {bouquet.receiverName}</h1>
-              <p className="tap-subtitle">Tap the gift to open your digital bouquet</p>
-              <motion.button 
+              <h1 className="tap-title">
+                A surprise for {bouquet.receiverName}
+              </h1>
+              <p className="tap-subtitle">
+                Tap the gift to open your digital bouquet
+              </p>
+              <motion.button
                 className="open-surprise-btn"
                 onClick={() => setIsOpened(true)}
                 whileHover={{ scale: 1.05 }}
@@ -102,27 +129,27 @@ function RevealBouquet() {
             </div>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             key="opened"
             className="reveal-content"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            <motion.div 
+            <motion.div
               className="reveal-visual"
               initial={{ scale: 0.8, rotate: -5 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", damping: 15, delay: 0.4 }}
             >
-              <BouquetDisplay 
-                flowerList={flowerList} 
-                bushSrc={BUSHES[bouquet.selectedBushId] || BUSHES["bush-1"]} 
+              <BouquetDisplay
+                flowerList={flowerList}
+                bushSrc={BUSHES[bouquet.selectedBushId] || BUSHES["bush-1"]}
                 seed={bouquet.shuffleKey || 0}
               />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className={`reveal-card reveal-card--style-${cardStyle}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

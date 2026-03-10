@@ -98,7 +98,7 @@ function PreviewBouquet() {
 
                 <button
                   className="view-btn"
-                  onClick={() => navigate(`/b/${id}`)}
+                  onClick={() => navigate(`/b/${id}`, { state: { fromPreview: true } })}
                 >
                   See Receiver View 🌷
                 </button>
