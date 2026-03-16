@@ -8,7 +8,9 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import bouquet1 from "../assets/bouqet1.jpeg";
 import bouquet2 from "../assets/bouquet2.jpeg";
+// eslint-disable-next-line no-unused-vars
 import illustration2 from "../assets/illustrations/illustration2.png";
+// eslint-disable-next-line no-unused-vars
 import illustration3 from "../assets/illustrations/illustration3.png";
 import bee from "../assets/illustrations/bee.png";
 import bee2 from "../assets/illustrations/bee2.png";
@@ -128,6 +130,44 @@ function PickFlowersStep() {
             : `${total} / ${MAX_FLOWERS} flowers`}
         </motion.div>
       </motion.div>
+
+      {/* Decorative Illustrations on Sides */}
+      <motion.img 
+        src={illustration2} 
+        alt="" 
+        className="decorative-illustration decorative-illustration-left"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ 
+          opacity: 0.6, 
+          x: 0,
+          y: [0, -10, 0],
+          rotate: [-0.5, 0.5, -0.5]
+        }}
+        transition={{ 
+          opacity: { duration: 1.5 },
+          x: { duration: 1.5 },
+          y: { repeat: Infinity, duration: 10, ease: "easeInOut" },
+          rotate: { repeat: Infinity, duration: 12, ease: "easeInOut" }
+        }}
+      />
+      <motion.img 
+        src={illustration3} 
+        alt="" 
+        className="decorative-illustration decorative-illustration-right"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ 
+          opacity: 0.6, 
+          x: 0,
+          y: [0, 10, 0],
+          rotate: [0.5, -0.5, 0.5]
+        }}
+        transition={{ 
+          opacity: { duration: 1.5 },
+          x: { duration: 1.5 },
+          y: { repeat: Infinity, duration: 12, ease: "easeInOut", delay: 1 },
+          rotate: { repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }
+        }}
+      />
 
       <div className="flower-grid">
 
