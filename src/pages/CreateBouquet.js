@@ -15,30 +15,34 @@ import bee2 from "../assets/illustrations/bee2.png";
 import writeIllustration from "../assets/illustrations/write.svg";
 import "../styles/create.css";
 
-// ── Catalogues ────────────────────────────────────────────────────────────────
+/* ── Catalogues ───────────────────────────────────────── */
+
 const FLOWERS = [
-  { id: "rose",      name: "Rose",      src: require("../assets/Flowers/rose.jpg") },
-  { id: "tulip",     name: "Tulip",     src: require("../assets/Flowers/tulip.jpg") },
+  { id: "rose", name: "Rose", src: require("../assets/Flowers/rose.jpg") },
+  { id: "tulip", name: "Tulip", src: require("../assets/Flowers/tulip.jpg") },
   { id: "sunflower", name: "Sunflower", src: require("../assets/Flowers/sunflower.jpg") },
-  { id: "orchid",    name: "Orchid",    src: require("../assets/Flowers/orchid.jpg") },
-  { id: "lily",      name: "Lily",      src: require("../assets/Flowers/lily.jpg") },
-  { id: "daisy",     name: "Daisy",     src: require("../assets/Flowers/daisy.jpg") },
+  { id: "orchid", name: "Orchid", src: require("../assets/Flowers/orchid.jpg") },
+  { id: "lily", name: "Lily", src: require("../assets/Flowers/lily.jpg") },
+  { id: "daisy", name: "Daisy", src: require("../assets/Flowers/daisy.jpg") },
   { id: "carnation", name: "Carnation", src: require("../assets/Flowers/carnation.jpg") },
-  { id: "dahlia",    name: "Dahlia",    src: require("../assets/Flowers/dahlia.jpg") },
-  { id: "anemone",   name: "Anemone",   src: require("../assets/Flowers/anemone.jpg") },
-  { id: "zinnia",    name: "Zinnia",    src: require("../assets/Flowers/zinnia.jpg") },
+  { id: "dahlia", name: "Dahlia", src: require("../assets/Flowers/dahlia.jpg") },
+  { id: "anemone", name: "Anemone", src: require("../assets/Flowers/anemone.jpg") },
+  { id: "zinnia", name: "Zinnia", src: require("../assets/Flowers/zinnia.jpg") },
 ];
 
 const BUSHES = [
-  { id: "bush-1", name: "Wild Meadow",   src: require("../assets/Bushes/bush-1.png") },
-  { id: "bush-2", name: "Garden Rose",   src: require("../assets/Bushes/bush-2.png") },
-  { id: "bush-3", name: "Rustic Fern",   src: require("../assets/Bushes/bush-3.png") },
+  { id: "bush-1", name: "Wild Meadow", src: require("../assets/Bushes/bush-1.png") },
+  { id: "bush-2", name: "Garden Rose", src: require("../assets/Bushes/bush-2.png") },
+  { id: "bush-3", name: "Rustic Fern", src: require("../assets/Bushes/bush-3.png") },
 ];
 
 const FLOWER_MAP = Object.fromEntries(FLOWERS.map((f) => [f.id, f]));
-const MAX_FLOWERS = 10;
 
-// ── Router entry ──────────────────────────────────────────────────────────────
+/* 🔴 UPDATED MAX FLOWERS */
+const MAX_FLOWERS = 7;
+
+/* ── Router Entry ─────────────────────────────────────── */
+
 function CreateBouquet() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
@@ -48,9 +52,10 @@ function CreateBouquet() {
   return <PickFlowersStep />;
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// STEP 1 — Pick Flowers
-// ══════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   STEP 1 — Pick Flowers
+═══════════════════════════════════════════════════════ */
+
 function PickFlowersStep() {
   const navigate = useNavigate();
   const [counts, setCounts] = useState({});
@@ -61,129 +66,129 @@ function PickFlowersStep() {
   const add = (id, e) => {
     e.stopPropagation();
     setError("");
+
     setCounts((prev) => {
-      const currentTotal = Object.values(prev).reduce((s, n) => s + n, 0);
-      if (currentTotal >= MAX_FLOWERS) return prev;
-      return { ...prev, [id]: (prev[id] || 0) + 1 };
+      const total = Object.values(prev).reduce((s, n) => s + n, 0);
+      if (total >= MAX_FLOWERS) return prev;
+
+      return {
+        ...prev,
+        [id]: (prev[id] || 0) + 1,
+      };
     });
   };
 
   const remove = (id, e) => {
     e.stopPropagation();
     setError("");
+
     setCounts((prev) => {
       const next = { ...prev };
+
       if ((next[id] || 0) <= 1) delete next[id];
       else next[id] -= 1;
+
       return next;
     });
   };
 
   const total = Object.values(counts).reduce((s, n) => s + n, 0);
-  const isEven = total > 0 && total % 2 === 0;
   const atMax = total >= MAX_FLOWERS;
 
   const handleBuild = () => {
-    if (total === 0) { setError("Pick at least 2 flowers to start your bouquet 🌸"); return; }
-    if (total % 2 !== 0) { setError(`You've chosen ${total} flower${total !== 1 ? "s" : ""} — add one more to make it even 🌺`); return; }
+    if (total === 0) {
+      setError("Pick at least 1 flower to start your bouquet 🌸");
+      return;
+    }
+
     navigate("/create?mode=customise", { state: { counts } });
   };
 
   return (
     <div className="create-page">
-      <motion.div className="create-header"
-        initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+
+      <motion.div
+        className="create-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         <h1 className="create-title">Build Your Bouquet</h1>
         <p className="create-subtitle">
           Add flowers you like.
         </p>
+
         <motion.div
-          className={`counter-badge ${isEven ? "counter-valid" : total > 0 ? "counter-odd" : ""}`}
+          className="counter-badge"
           animate={{ scale: total > 0 ? [1, 1.15, 1] : 1 }}
           transition={{ duration: 0.3 }}
           key={total}
         >
           {total === 0
             ? `Choose up to ${MAX_FLOWERS} flowers`
-            : `${total} / ${MAX_FLOWERS} flowers ${isEven ? "✅" : "— need even number"}`}
+            : `${total} / ${MAX_FLOWERS} flowers`}
         </motion.div>
       </motion.div>
 
-      {/* Decorative Illustrations */}
-      <motion.img 
-        src={illustration2} 
-        alt="" 
-        className="decorative-illustration decorative-illustration-left"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ 
-          opacity: 0.6, 
-          x: 0,
-          y: [0, -10, 0],
-          rotate: [-0.5, 0.5, -0.5]
-        }}
-        transition={{ 
-          opacity: { duration: 1.5 },
-          x: { duration: 1.5 },
-          y: { repeat: Infinity, duration: 10, ease: "easeInOut" },
-          rotate: { repeat: Infinity, duration: 12, ease: "easeInOut" }
-        }}
-      />
-      <motion.img 
-        src={illustration3} 
-        alt="" 
-        className="decorative-illustration decorative-illustration-right"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ 
-          opacity: 0.6, 
-          x: 0,
-          y: [0, 10, 0],
-          rotate: [0.5, -0.5, 0.5]
-        }}
-        transition={{ 
-          opacity: { duration: 1.5 },
-          x: { duration: 1.5 },
-          y: { repeat: Infinity, duration: 12, ease: "easeInOut", delay: 1 },
-          rotate: { repeat: Infinity, duration: 10, ease: "easeInOut", delay: 1 }
-        }}
-      />
-
       <div className="flower-grid">
+
         {FLOWERS.map((flower, i) => {
+
           const count = getCount(flower.id);
           const isSelected = count > 0;
+
           return (
             <motion.div
               key={flower.id}
               className={`flower-card ${isSelected ? "flower-card--selected" : ""}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
-              whileHover={{ y: -5, scale: 1.02 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
             >
+
               <AnimatePresence>
                 {isSelected && (
-                  <motion.span className="flower-count-badge"
+                  <motion.span
+                    className="flower-count-badge"
                     key={count}
-                    initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.6, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    initial={{ scale: 0.6, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.6, opacity: 0 }}
+                  >
                     {count}
                   </motion.span>
                 )}
               </AnimatePresence>
+
               <div className="flower-img-wrap">
                 <img src={flower.src} alt={flower.name} className="flower-img" />
               </div>
-              <span className="flower-name">{flower.name}</span>
+
+              <span className="flower-name">
+                {flower.name}
+              </span>
+
               <div className="flower-controls">
-                <motion.button className="ctrl-btn ctrl-minus" onClick={(e) => remove(flower.id, e)}
-                  disabled={!isSelected} whileTap={{ scale: 0.85 }} title="Remove one">
+
+                <motion.button
+                  className="ctrl-btn ctrl-minus"
+                  onClick={(e) => remove(flower.id, e)}
+                  disabled={!isSelected}
+                  whileTap={{ scale: 0.85 }}
+                >
                   <FaMinus />
                 </motion.button>
-                <motion.button className="ctrl-btn ctrl-plus" onClick={(e) => add(flower.id, e)}
-                  disabled={atMax} whileTap={{ scale: 0.85 }} title={atMax ? "Max 10 reached" : "Add one"}>
+
+                <motion.button
+                  className="ctrl-btn ctrl-plus"
+                  onClick={(e) => add(flower.id, e)}
+                  disabled={atMax}
+                  whileTap={{ scale: 0.85 }}
+                >
                   <FaPlus />
                 </motion.button>
+
               </div>
+
             </motion.div>
           );
         })}
@@ -191,22 +196,26 @@ function PickFlowersStep() {
 
       <AnimatePresence>
         {error && (
-          <motion.p className="create-error"
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
+          <motion.p
+            className="create-error"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             {error}
           </motion.p>
         )}
       </AnimatePresence>
 
       <motion.button
-        className={`build-btn ${isEven ? "build-btn--active" : ""}`}
+        className={`build-btn ${total > 0 ? "build-btn--active" : ""}`}
         onClick={handleBuild}
-        whileHover={isEven ? { scale: 1.05 } : {}}
-        whileTap={isEven ? { scale: 0.95 } : {}}
+        whileHover={total > 0 ? { scale: 1.05 } : {}}
+        whileTap={total > 0 ? { scale: 0.95 } : {}}
       >
-        Build My Bouquet <FaArrowRight className="btn-arrow" />
+        Build My Bouquet
+        <FaArrowRight className="btn-arrow" />
       </motion.button>
+
     </div>
   );
 }
@@ -224,25 +233,36 @@ function CustomiseStep() {
 
   const flowerList = useMemo(() => {
     const list = [];
-    Object.entries(counts).forEach(([id, qty]) => {
-      const flower = FLOWER_MAP[id];
-      if (flower) for (let i = 0; i < qty; i++) list.push(flower);
-    });
+    Object.entries(counts)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([id, qty]) => {
+        const flower = FLOWER_MAP[id];
+        if (flower) for (let i = 0; i < qty; i++) list.push(flower);
+      });
     return list;
   }, [counts]);
 
   const [selectedBush, setSelectedBush] = useState(BUSHES[0]);
   const [shuffleKey, setShuffleKey] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [dragOffsets, setDragOffsets] = useState({});
 
-  const shuffle = () => setShuffleKey((k) => k + 1);
+  const shuffle = () => {
+    setShuffleKey((k) => k + 1);
+    setDragOffsets({});  // reset manual positions on shuffle
+  };
+
+  const handleFlowerDragEnd = (index, offset) => {
+    setDragOffsets((prev) => ({ ...prev, [index]: offset }));
+  };
 
   const handleNext = () => {
     navigate("/create?mode=message", { 
       state: { 
         counts, 
         selectedBushId: selectedBush.id,
-        shuffleKey 
+        shuffleKey,
+        dragOffsets,
       } 
     });
   };
@@ -322,6 +342,9 @@ function CustomiseStep() {
             seed={shuffleKey}
             flowerList={flowerList}
             bushSrc={selectedBush.src}
+            isDraggable
+            dragOffsets={dragOffsets}
+            onFlowerDragEnd={handleFlowerDragEnd}
           />
           <motion.button className="shuffle-btn" onClick={shuffle}
             whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}>
@@ -368,7 +391,7 @@ function CustomiseStep() {
 function MessageStep() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { counts, selectedBushId, shuffleKey } = location.state || {};
+  const { counts, selectedBushId, shuffleKey, dragOffsets = {} } = location.state || {};
 
   const [receiverName, setReceiverName] = useState("");
   const [message, setMessage] = useState("");
@@ -391,6 +414,7 @@ function MessageStep() {
         counts,
         selectedBushId,
         shuffleKey,
+        dragOffsets,
         receiverName,
         message,
         createdAt: serverTimestamp(),

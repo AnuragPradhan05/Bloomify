@@ -53,10 +53,12 @@ function PreviewBouquet() {
   const flowerList = useMemo(() => {
     if (!bouquet?.counts) return [];
     const list = [];
-    Object.entries(bouquet.counts).forEach(([fid, qty]) => {
-      const flower = FLOWERS[fid];
-      if (flower) for (let i = 0; i < qty; i++) list.push(flower);
-    });
+    Object.entries(bouquet.counts)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([fid, qty]) => {
+        const flower = FLOWERS[fid];
+        if (flower) for (let i = 0; i < qty; i++) list.push(flower);
+      });
     return list;
   }, [bouquet]);
 
@@ -81,6 +83,7 @@ function PreviewBouquet() {
                 flowerList={flowerList} 
                 bushSrc={BUSHES[bouquet.selectedBushId] || BUSHES["bush-1"]} 
                 seed={bouquet.shuffleKey || 0}
+                dragOffsets={bouquet.dragOffsets || {}}
               />
             </div>
           </div>
