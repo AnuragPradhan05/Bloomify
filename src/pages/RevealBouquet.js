@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import FloatingFlowers from "../components/FloatingFlowers";
 import TypingMessage from "../components/TypingMessage";
+import SEOHead from "../components/SEOHead";
 import "../styles/reveal.css";
 
 const BUSHES = {
@@ -71,6 +72,17 @@ function RevealBouquet() {
     return list;
   }, [bouquet]);
 
+  const webpageSchema = useMemo(() => {
+    if (!bouquet) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": `Digital Flower Bouquet for ${bouquet.receiverName || "Someone Special"}`,
+      "description": `A personal digital bouquet surprise created with Bloomify.`,
+      "url": `https://bloomify-ashen.vercel.app/b/${id}`
+    };
+  }, [bouquet, id]);
+
   if (!bouquet)
     return (
       <div className="reveal-container loading-state">
@@ -78,10 +90,18 @@ function RevealBouquet() {
       </div>
     );
 
+  const recipientName = bouquet.receiverName || "Someone Special";
+
   return (
-    <div className="reveal-page">
+    <main className="reveal-page">
+      <SEOHead
+        title={`A Digital Bouquet Surprise for ${recipientName} | Bloomify`}
+        description={`You received a handcrafted digital bouquet surprise from someone special on Bloomify!`}
+        canonicalUrl={`https://bloomify-ashen.vercel.app/b/${id}`}
+        jsonLd={webpageSchema}
+      />
       <FloatingFlowers />
-      <div className="reveal-backdrop-text">For You</div>
+      <div className="reveal-backdrop-text" aria-hidden="true">For You</div>
 
       {/* ── Back to Preview (only visible to creator) ── */}
       {fromPreview && (
@@ -111,6 +131,7 @@ function RevealBouquet() {
                 className="gift-box"
                 animate={{ y: [0, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                aria-hidden="true"
               >
                 🎁
               </motion.div>
@@ -158,7 +179,7 @@ function RevealBouquet() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <h1 className="receiver-header">For {bouquet.receiverName}</h1>
+              <h2 className="receiver-header">For {bouquet.receiverName}</h2>
               <div className="reveal-message-container">
                 <div className="reveal-message">
                   <TypingMessage text={bouquet.message} />
@@ -167,12 +188,12 @@ function RevealBouquet() {
               <div className="reveal-footer">
                 <p>Sent with Bloomify 🌸</p>
               </div>
-              <div className="reveal-card-moon">🌙</div>
+              <div className="reveal-card-moon" aria-hidden="true">🌙</div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </main>
   );
 }
 

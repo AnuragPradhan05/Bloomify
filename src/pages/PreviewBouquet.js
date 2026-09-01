@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
 import FloatingFlowers from "../components/FloatingFlowers";
 import CopyLinkBox from "../components/CopyLinkBox";
+import SEOHead from "../components/SEOHead";
 import "../styles/preview.css";
 
 const BUSHES = {
@@ -62,12 +63,15 @@ function PreviewBouquet() {
     return list;
   }, [bouquet]);
 
-
-
   if (!bouquet) return <div className="preview-container">Loading your bouquet...</div>;
 
   return (
-    <div className="preview-page">
+    <main className="preview-page">
+      <SEOHead
+        title={`Preview Digital Bouquet for ${bouquet.receiverName || "Someone Special"} | Bloomify`}
+        description="Preview your personalized digital bouquet and get your unique shareable recipient link."
+        noindex={true}
+      />
       <FloatingFlowers />
       <div className="preview-content">
         <header className="preview-header">
@@ -91,7 +95,7 @@ function PreviewBouquet() {
           {/* Card Info */}
           <div className="preview-details">
             <div className="share-card">
-              <h3>For: {bouquet.receiverName}</h3>
+              <h2>For: {bouquet.receiverName}</h2>
               <div className="message-box">
                 <p>{bouquet.message}</p>
               </div>
@@ -110,7 +114,7 @@ function PreviewBouquet() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
