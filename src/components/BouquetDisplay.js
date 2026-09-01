@@ -82,7 +82,7 @@ function BouquetDisplay({
     <div className="bouquet-display" ref={containerRef}>
       {/* Greenery background */}
       {bushSrc && (
-        <img src={bushSrc} alt="Greenery" className="bouquet-bush" />
+        <img src={bushSrc} alt="Greenery bush background" className="bouquet-bush" />
       )}
 
       {/* Drag hint badge — only in draggable mode, disappears after first drag */}
@@ -102,7 +102,7 @@ function BouquetDisplay({
           <motion.img
             key={`${flower.id}-${i}`}
             src={flower.src}
-            alt={flower.name}
+            alt={`${flower.name} flower in bouquet`}
             className={`bouquet-flower${isDraggable ? " bouquet-flower--draggable" : ""}${isDragging ? " bouquet-flower--dragging" : ""}`}
             style={{
               left: `${pos.x}%`,

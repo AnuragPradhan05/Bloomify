@@ -6,11 +6,10 @@ import Swal from "sweetalert2";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import BouquetDisplay from "../components/BouquetDisplay";
+import SEOHead from "../components/SEOHead";
 import bouquet1 from "../assets/bouqet1.jpeg";
 import bouquet2 from "../assets/bouquet2.jpeg";
-// eslint-disable-next-line no-unused-vars
 import illustration2 from "../assets/illustrations/illustration2.png";
-// eslint-disable-next-line no-unused-vars
 import illustration3 from "../assets/illustrations/illustration3.png";
 import bee from "../assets/illustrations/bee.png";
 import bee2 from "../assets/illustrations/bee2.png";
@@ -40,7 +39,7 @@ const BUSHES = [
 
 const FLOWER_MAP = Object.fromEntries(FLOWERS.map((f) => [f.id, f]));
 
-/* 🔴 UPDATED MAX FLOWERS */
+/* 🔴 MAX FLOWERS */
 const MAX_FLOWERS = 7;
 
 /* ── Router Entry ─────────────────────────────────────── */
@@ -107,7 +106,12 @@ function PickFlowersStep() {
   };
 
   return (
-    <div className="create-page">
+    <main className="create-page">
+      <SEOHead
+        title="Build Your Digital Flower Bouquet | Bloomify"
+        description="Choose from roses, tulips, sunflowers, lilies, and orchids to craft a custom digital flower bouquet for your loved ones."
+        canonicalUrl="https://bloomify-ashen.vercel.app/create"
+      />
 
       <motion.div
         className="create-header"
@@ -135,6 +139,7 @@ function PickFlowersStep() {
       <motion.img 
         src={illustration2} 
         alt="" 
+        aria-hidden="true"
         className="decorative-illustration decorative-illustration-left"
         initial={{ opacity: 0, x: -50 }}
         animate={{ 
@@ -153,6 +158,7 @@ function PickFlowersStep() {
       <motion.img 
         src={illustration3} 
         alt="" 
+        aria-hidden="true"
         className="decorative-illustration decorative-illustration-right"
         initial={{ opacity: 0, x: 50 }}
         animate={{ 
@@ -170,9 +176,7 @@ function PickFlowersStep() {
       />
 
       <div className="flower-grid">
-
         {FLOWERS.map((flower, i) => {
-
           const count = getCount(flower.id);
           const isSelected = count > 0;
 
@@ -184,7 +188,6 @@ function PickFlowersStep() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-
               <AnimatePresence>
                 {isSelected && (
                   <motion.span
@@ -200,7 +203,7 @@ function PickFlowersStep() {
               </AnimatePresence>
 
               <div className="flower-img-wrap">
-                <img src={flower.src} alt={flower.name} className="flower-img" />
+                <img src={flower.src} alt={`${flower.name} flower`} className="flower-img" />
               </div>
 
               <span className="flower-name">
@@ -208,12 +211,12 @@ function PickFlowersStep() {
               </span>
 
               <div className="flower-controls">
-
                 <motion.button
                   className="ctrl-btn ctrl-minus"
                   onClick={(e) => remove(flower.id, e)}
                   disabled={!isSelected}
                   whileTap={{ scale: 0.85 }}
+                  aria-label={`Remove one ${flower.name}`}
                 >
                   <FaMinus />
                 </motion.button>
@@ -223,12 +226,11 @@ function PickFlowersStep() {
                   onClick={(e) => add(flower.id, e)}
                   disabled={atMax}
                   whileTap={{ scale: 0.85 }}
+                  aria-label={`Add one ${flower.name}`}
                 >
                   <FaPlus />
                 </motion.button>
-
               </div>
-
             </motion.div>
           );
         })}
@@ -255,14 +257,13 @@ function PickFlowersStep() {
         Build My Bouquet
         <FaArrowRight className="btn-arrow" />
       </motion.button>
-
-    </div>
+    </main>
   );
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// STEP 2 — Customise (Greenery + Arrangement)
-// ══════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   STEP 2 — Customise (Greenery + Arrangement)
+═══════════════════════════════════════════════════════ */
 function CustomiseStep() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -308,11 +309,17 @@ function CustomiseStep() {
   };
 
   return (
-    <div className="create-page customise-page">
+    <main className="create-page customise-page">
+      <SEOHead
+        title="Customise Greenery & Bouquet Layout | Bloomify"
+        description="Select greenery bushes and arrange your digital bouquet flowers with interactive drag and drop."
+        canonicalUrl="https://bloomify-ashen.vercel.app/create"
+      />
+
       {/* ── Header ── */}
       <motion.div className="create-header"
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-        <h1 className="create-title">Customise</h1>
+        <h1 className="create-title">Customise Your Bouquet</h1>
         <p className="create-subtitle">
           Choose your <strong>greenery</strong> and shuffle the arrangement until it feels right.
         </p>
@@ -329,7 +336,7 @@ function CustomiseStep() {
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Localized Interactive Bees */}
-          <div className="bouquet-bee-container">
+          <div className="bouquet-bee-container" aria-hidden="true">
             {[...Array(4)].map((_, i) => (
               <motion.img 
                 key={i}
@@ -338,10 +345,10 @@ function CustomiseStep() {
                 className="decoration-bee"
                 animate={{
                   x: isHovered 
-                    ? (i === 0 ? -600 : i === 1 ? 600 : i === 2 ? -400 : 400) // Fly far off-screen
-                    : [0, (i % 2 === 0 ? 30 : -30), 0], // Gentle buzz
+                    ? (i === 0 ? -600 : i === 1 ? 600 : i === 2 ? -400 : 400)
+                    : [0, (i % 2 === 0 ? 30 : -30), 0],
                   y: isHovered 
-                    ? (i < 2 ? -600 : 600) // Fly far off-screen
+                    ? (i < 2 ? -600 : 600)
                     : [0, (i % 2 === 0 ? -40 : 40), 0],
                   rotate: isHovered 
                     ? (i % 2 === 0 ? -90 : 90) 
@@ -395,7 +402,7 @@ function CustomiseStep() {
         {/* ── Right: Greenery picker ── */}
         <motion.div className="greenery-panel"
           initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-          <h3 className="panel-label">Choose Greenery</h3>
+          <h2 className="panel-label">Choose Greenery</h2>
           <div className="greenery-grid">
             {BUSHES.map((bush) => (
               <motion.div
@@ -405,7 +412,7 @@ function CustomiseStep() {
                 whileHover={{ y: -4, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <img src={bush.src} alt={bush.name} className="greenery-img" />
+                <img src={bush.src} alt={`${bush.name} greenery bush`} className="greenery-img" />
                 <span className="greenery-name">{bush.name}</span>
                 {selectedBush.id === bush.id && (
                   <span className="greenery-selected-dot" />
@@ -421,13 +428,13 @@ function CustomiseStep() {
           </motion.button>
         </motion.div>
       </div>
-    </div>
+    </main>
   );
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// STEP 3 — Message (Diary/Letter)
-// ══════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   STEP 3 — Message (Diary/Letter)
+═══════════════════════════════════════════════════════ */
 function MessageStep() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -474,11 +481,18 @@ function MessageStep() {
   };
 
   return (
-    <div className="create-page message-page">
+    <main className="create-page message-page">
+      <SEOHead
+        title="Write a Personal Message | Bloomify"
+        description="Write a heart-felt personal diary message to accompany your custom digital bouquet gift."
+        canonicalUrl="https://bloomify-ashen.vercel.app/create"
+      />
+
       {/* ── Background Decoration ── */}
       <motion.img
         src={writeIllustration}
         alt=""
+        aria-hidden="true"
         className="message-decoration-svg"
         initial={{ opacity: 0, x: 20 }}
         animate={{
@@ -512,6 +526,7 @@ function MessageStep() {
         <motion.img 
           src={bouquet1} 
           alt="" 
+          aria-hidden="true"
           className="side-bouquet side-bouquet-left"
           animate={{ y: [0, -15, 0], rotate: [-2, 2, -2] }}
           transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
@@ -519,6 +534,7 @@ function MessageStep() {
         <motion.img 
           src={bouquet2} 
           alt="" 
+          aria-hidden="true"
           className="side-bouquet side-bouquet-right"
           animate={{ y: [0, 15, 0], rotate: [2, -2, 2] }}
           transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.5 }}
@@ -549,6 +565,7 @@ function MessageStep() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="diary-textarea"
+              aria-label="Personal bouquet message"
             />
           </div>
           
@@ -568,7 +585,7 @@ function MessageStep() {
           {!isSending && <FaPaperPlane className="btn-arrow" />}
         </motion.button>
       </motion.div>
-    </div>
+    </main>
   );
 }
 

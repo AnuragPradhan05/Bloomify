@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CreateBouquet from "./pages/CreateBouquet";
 import PreviewBouquet from "./pages/PreviewBouquet";
 import RevealBouquet from "./pages/RevealBouquet";
+import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import IntroVideo from "./components/IntroVideo";
 import ScrollToTop from "./components/ScrollToTop";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/create" element={<CreateBouquet />} />
             <Route path="/preview/:id" element={<PreviewBouquet />} />
             <Route path="/b/:id" element={<RevealBouquet />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       )}

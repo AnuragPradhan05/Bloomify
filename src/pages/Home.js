@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowRight, FaChevronDown } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import bouquet1 from "../assets/bouqet1.jpeg";
 import bouquet2 from "../assets/bouquet2.jpeg";
 import bouquet3 from "../assets/bouquet3.jpeg";
@@ -11,6 +11,7 @@ import butterfly2 from "../assets/butterfly2.jpeg";
 import butterfly3 from "../assets/butterfly3.jpeg";
 import "../styles/home.css";
 import FloatingFlowers from "../components/FloatingFlowers";
+import SEOHead from "../components/SEOHead";
 
 function Home() {
   const navigate = useNavigate();
@@ -35,16 +36,45 @@ function Home() {
     }
   };
 
+  // Structured Data (JSON-LD) for Search Engines
+  const websiteSchema = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://bloomify-ashen.vercel.app/#website",
+        "url": "https://bloomify-ashen.vercel.app/",
+        "name": "Bloomify",
+        "description": "Create, customize, and send beautiful digital flower bouquets online with personalized diary notes.",
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://bloomify-ashen.vercel.app/#organization",
+        "name": "Bloomify",
+        "url": "https://bloomify-ashen.vercel.app/",
+        "logo": "https://bloomify-ashen.vercel.app/logo512.png"
+      }
+    ]
+  }), []);
+
   return (
     <div className="home-container">
-      <div className="backdrop-text">Bloomify</div>
+      <SEOHead
+        title="Bloomify – Create & Send Digital Flower Bouquets Online 🌸"
+        description="Craft personalized animated digital flower bouquets with sweet diary notes for your loved ones. Bouquets that never fade."
+        canonicalUrl="https://bloomify-ashen.vercel.app/"
+        jsonLd={websiteSchema}
+      />
+
+      <div className="backdrop-text" aria-hidden="true">Bloomify</div>
       <FloatingFlowers />
 
-      {/* Fixed Background Decorations */}
-      <div className="bouquet-decorations fixed-decor">
+      {/* Fixed Background Decorative Visuals */}
+      <div className="bouquet-decorations fixed-decor" aria-hidden="true">
         <motion.img
           src={bouquet1}
-          alt="Bouquet 1"
+          alt="Digital rose and tulip bouquet preview"
           className="bouquet-img img-1"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -52,7 +82,7 @@ function Home() {
         />
         <motion.img
           src={bouquet2}
-          alt="Bouquet 2"
+          alt="Digital sunflower bouquet preview"
           className="bouquet-img img-2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -60,7 +90,7 @@ function Home() {
         />
         <motion.img
           src={bouquet3}
-          alt="Bouquet 3"
+          alt="Digital lily bouquet preview"
           className="bouquet-img img-3"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -69,28 +99,31 @@ function Home() {
 
         <motion.img
           src={butterfly1}
-          alt="Butterfly 1"
+          alt=""
+          aria-hidden="true"
           className="butterfly-img bfly-1"
           animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         />
         <motion.img
           src={butterfly2}
-          alt="Butterfly 2"
+          alt=""
+          aria-hidden="true"
           className="butterfly-img bfly-2"
           animate={{ y: [0, 15, 0] }}
           transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
         />
         <motion.img
           src={butterfly3}
-          alt="Butterfly 3"
+          alt=""
+          aria-hidden="true"
           className="butterfly-img bfly-3"
           animate={{ y: [0, -12, 0] }}
           transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 2 }}
         />
       </div>
 
-      <div className="sections-wrapper">
+      <main className="sections-wrapper">
 
         {/* ── Section 1: Hero ── */}
         <section className="home-section section-hero">
@@ -130,7 +163,7 @@ function Home() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ delay: 1.6, duration: 0.6 }}
-                aria-label="Scroll down"
+                aria-label="Scroll down to details"
               >
                 <FaChevronDown />
               </motion.button>
@@ -172,7 +205,7 @@ function Home() {
           </motion.div>
         </section>
 
-      </div>
+      </main>
     </div>
   );
 }
