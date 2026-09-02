@@ -122,8 +122,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 400px;
+  justify-content: space-between;
+  height: 440px;
   box-sizing: border-box;
   transition: all 0.3s ease;
   background: white;
@@ -205,14 +205,45 @@
   color: #381932;
   font-size: clamp(1.3rem, 3.5vw, 1.8rem);
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   border-bottom: 2px solid #FFF3E6;
   padding-bottom: 15px;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .reveal-message-container {
   z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 8px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 25, 50, 0.25) transparent;
+}
+
+/* Custom scrollbar for Webkit browsers */
+.reveal-message-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reveal-message-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reveal-message-container::-webkit-scrollbar-thumb {
+  background-color: rgba(56, 25, 50, 0.25);
+  border-radius: 10px;
+}
+
+.reveal-card.reveal-card--style-4 .reveal-message-container {
+  scrollbar-color: rgba(237, 157, 160, 0.35) transparent;
+}
+
+.reveal-card.reveal-card--style-4 .reveal-message-container::-webkit-scrollbar-thumb {
+  background-color: rgba(237, 157, 160, 0.35);
 }
 
 .reveal-message {
@@ -221,10 +252,13 @@
   color: #444;
   line-height: 1.4;
   white-space: pre-wrap;
+  word-break: break-word;
+  margin: auto 0;
+  width: 100%;
 }
 
 .reveal-footer {
-  margin-top: 30px;
+  margin-top: 16px;
   font-family: 'Syne', sans-serif;
   font-size: 0.85rem;
   color: #a38da0;
@@ -232,6 +266,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 /* ── Loading State ── */
@@ -245,6 +280,10 @@
   font-size: clamp(1rem, 3vw, 1.5rem);
   background: #FFF3E6;
 }
+
+/* ======================================= */
+/* 📱 Large Tablet (max-width: 900px)      */
+/* ======================================= */
 
 /* ======================================= */
 /* 📱 Large Tablet (max-width: 900px)      */
@@ -265,7 +304,7 @@
   }
 
   .reveal-card {
-    min-height: 360px;
+    height: 420px;
   }
 }
 
@@ -297,14 +336,14 @@
 
   .reveal-card {
     padding: 32px 24px;
-    min-height: 320px;
+    height: 380px;
     border-radius: 20px;
   }
 
   .reveal-footer {
     font-size: 0.78rem;
     letter-spacing: 1.5px;
-    margin-top: 22px;
+    margin-top: 16px;
   }
 }
 
@@ -344,8 +383,8 @@
   }
 
   .reveal-card {
-    padding: 28px 18px;
-    min-height: auto;
+    padding: 24px 18px;
+    height: 360px;
     border-radius: 18px;
   }
 
@@ -354,7 +393,7 @@
   }
 
   .reveal-footer {
-    margin-top: 18px;
+    margin-top: 14px;
   }
 }
 
@@ -376,7 +415,8 @@
   }
 
   .reveal-card {
-    padding: 24px 16px;
+    padding: 20px 16px;
+    height: 340px;
     border-radius: 16px;
   }
 
@@ -411,7 +451,8 @@
   }
 
   .reveal-card {
-    padding: 20px 14px;
+    padding: 18px 14px;
+    height: 320px;
     border-radius: 14px;
   }
 }
@@ -450,12 +491,12 @@
   }
 
   .reveal-card {
-    padding: 20px 18px;
-    min-height: auto;
+    padding: 16px 14px;
+    height: 280px;
   }
 
   .reveal-footer {
-    margin-top: 12px;
+    margin-top: 10px;
   }
 }
 
