@@ -54,7 +54,8 @@
 .bouquet-preview-container {
   width: 100%;
   max-width: 450px;
-  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 24px;
 }
 
 /* ── Right: Card Details ── */
@@ -286,7 +287,6 @@
 
   .bouquet-preview-container {
     max-width: 100%;
-    aspect-ratio: 3 / 4;
   }
 
   .share-card {
@@ -399,7 +399,6 @@
 
   .bouquet-preview-container {
     max-width: 220px;
-    aspect-ratio: 3 / 4;
   }
 
   .share-card {
