@@ -1,5 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+
+const BASE_WIDTH = 400; // Baseline width for consistent coordinate scaling
 
 // Deterministic-ish pseudo-random using a seed so the layout is stable per
 // render but changes entirely when the `key` prop changes (via shuffleKey).
@@ -30,6 +32,20 @@ function BouquetDisplay({
 }) {
   const containerRef = useRef(null);
   const [draggingIndex, setDraggingIndex] = useState(null);
+  const [containerWidth, setContainerWidth] = useState(BASE_WIDTH);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      if (entries[0] && entries[0].contentRect.width > 0) {
+        setContainerWidth(entries[0].contentRect.width);
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const renderScale = containerWidth / BASE_WIDTH;
 
   const positions = useMemo(() => {
     const rand = seededRandom(seed + flowerList.length * 9999);
@@ -121,17 +137,18 @@ function BouquetDisplay({
             animate={{
               opacity: 1,
               scale: isDragging ? 1.15 : 1,
-              x: offset.x,
-              y: offset.y,
+              x: (offset.x || 0) * renderScale,
+              y: (offset.y || 0) * renderScale,
             }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
             onDragStart={isDraggable ? () => setDraggingIndex(i) : undefined}
             onDragEnd={isDraggable ? (_, info) => {
               setDraggingIndex(null);
               if (onFlowerDragEnd) {
+                const normalizeScale = BASE_WIDTH / containerWidth;
                 onFlowerDragEnd(i, {
-                  x: (offset.x || 0) + info.offset.x,
-                  y: (offset.y || 0) + info.offset.y,
+                  x: (offset.x || 0) + (info.offset.x * normalizeScale),
+                  y: (offset.y || 0) + (info.offset.y * normalizeScale),
                 });
               }
             } : undefined}
