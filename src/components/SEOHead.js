@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const DEFAULT_SITE_URL = process.env.REACT_APP_SITE_URL || "https://bloomify-ashen.vercel.app";
+const DEFAULT_SITE_URL = process.env.REACT_APP_SITE_URL || "https://bloomify-ashen.netlify.app";
 const DEFAULT_TITLE = "Bloomify – Create Beautiful Digital Flower Bouquets Online 🌸";
 const DEFAULT_DESCRIPTION = "Create, customize, and send hand-crafted digital flower bouquets with sweet personalized notes to your loved ones online.";
 const DEFAULT_OG_IMAGE = `${DEFAULT_SITE_URL}/logo512.png`;
