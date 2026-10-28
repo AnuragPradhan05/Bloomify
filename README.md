@@ -6,7 +6,7 @@ Bloomify is a React-based web application that allows users to design custom flo
 
 ## 🌐 Live Demo
 
-https://bloomify-ashen.vercel.app/
+[https://bloomify-ashen.vercel.app/](https://bloomify-ashen.netlify.app/)
 
 ---
 
